@@ -1,0 +1,27 @@
+﻿<Window x:Class="MhsLogoUI.View.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:MhsLogoUI="clr-namespace:MhsLogoUI" xmlns:ViewModel="clr-namespace:MhsLogoUI.ViewModel" Title="MhsLogo" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+	<Window.DataContext>
+		<ViewModel:MainWindowViewModel />
+	</Window.DataContext>
+	<StackPanel FocusManager.FocusedElement="{Binding ElementName=LogoConsole}">
+		<ItemsControl ItemsSource="{Binding Path=DrawingInstructions}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas Name="LogoCanvas" MinWidth="500" Height="400" HorizontalAlignment="Stretch" Background="AntiqueWhite" IsItemsHost="True">
+						<Canvas.RenderTransform>
+							<ScaleTransform CenterY="200" ScaleY="-1" />
+						</Canvas.RenderTransform>
+					</Canvas>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.Items></ItemsControl.Items>
+		</ItemsControl>
+		<TextBox Name="LogoConsole" Height="30" Text="{Binding Path=ProgramCommand}" MinWidth="500" HorizontalAlignment="Stretch" CharacterCasing="Upper" Cursor="IBeam" TabIndex="0">
+			<TextBox.InputBindings>
+				<KeyBinding Command="{Binding Path=ParseProgramCommand}" CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" Key="Enter" />
+			</TextBox.InputBindings>
+		</TextBox>
+		<StatusBar MinWidth="500" Height="25" HorizontalAlignment="Stretch">
+			<TextBlock Text="{Binding Path=ParseError}" />
+		</StatusBar>
+	</StackPanel>
+</Window>
