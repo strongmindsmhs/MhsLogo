@@ -21,19 +21,19 @@ namespace MhsLogoParser
 			public override int Angle
 			{
 				get { return 90; }
-				set { throw new NotImplementedException(); }
+				set { throw new NotSupportedException(); }
 			}
 
 			public override Position Position
 			{
 				get { return new Position {X = 250, Y = 200}; }
-				set { throw new NotImplementedException(); }
+				set { throw new NotSupportedException(); }
 			}
 
 			public override int TurnAngle
 			{
 				get { return 0; }
-				set { throw new NotImplementedException(); }
+				set { throw new NotSupportedException(); }
 			}
 		}
 

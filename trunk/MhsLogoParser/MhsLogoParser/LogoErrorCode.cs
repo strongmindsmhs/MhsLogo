@@ -3,6 +3,7 @@
 	public enum LogoErrorCode
 	{
 		SentenceError,
-		MatchError
+		MatchError,
+		NumberError
 	}
 }
