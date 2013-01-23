@@ -42,12 +42,18 @@ namespace MhsLogoParser
 		//                   | LEFT <integer>
 		//                   | RIGHT <integer>
 		//                   | REPEAT <integer> [ <logo-sentence> { <logo-sentence> } ]
+		//									 | CLEAR
 		private ILogoCommand ParseLogoSentence()
 		{
 			ILogoCommand result = null;
 			Token nextToken = scanner.NextToken();
 			switch (nextToken)
 			{
+				case Token.CLEAR:
+					Match(nextToken);
+					result = new LogoClearCommand();
+					break;
+
 				case Token.FORWARD:
 				case Token.BACK:
 				case Token.LEFT:
@@ -84,7 +90,7 @@ namespace MhsLogoParser
 					break;
 
 				default:
-					SyntaxError(String.Format("Expected one of: FORWARD, BACK, LEFT, RIGHT or REPEAT but found {0}",
+					SyntaxError(String.Format("Expected one of: CLEAR, FORWARD, BACK, LEFT, RIGHT or REPEAT but found {0}",
 					                          TokenHelper.TokenToText(nextToken)), LogoErrorCode.SentenceError);
 					break;
 			}

@@ -25,6 +25,7 @@ namespace MhsLogoParser
 			                  	};
 			result.Angle = currentSituation.Angle;
 			result.TurnAngle = currentSituation.TurnAngle;
+			result.Change = TurtleSituationChange.Moved;
 			return result;
 		}
 

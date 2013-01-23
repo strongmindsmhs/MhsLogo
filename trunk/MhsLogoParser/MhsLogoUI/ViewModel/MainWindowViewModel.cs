@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -77,16 +78,35 @@ namespace MhsLogoUI.ViewModel
 		{
 			TurtleSituation currentSituation = LogoController.CurrentSituation;
 			TurtleSituation newSituation = e.LogoCommand.CalculateSituation(currentSituation);
-			var brush = new SolidColorBrush(Colors.Black);
-			DrawingInstructions.Add(new Line
+
+			switch (newSituation.Change)
 			{
-				X1 = currentSituation.Position.X,
-				Y1 = currentSituation.Position.Y,
-				X2 = newSituation.Position.X,
-				Y2 = newSituation.Position.Y,
-				Stroke = brush,
-				StrokeThickness = 3
-			});
+				case TurtleSituationChange.Moved:
+					var brush = new SolidColorBrush(Colors.Black);
+					DrawingInstructions.Add(new Line
+					                        	{
+					                        		X1 = currentSituation.Position.X,
+					                        		Y1 = currentSituation.Position.Y,
+					                        		X2 = newSituation.Position.X,
+					                        		Y2 = newSituation.Position.Y,
+					                        		Stroke = brush,
+					                        		StrokeThickness = 3
+					                        	});
+					break;
+
+				case TurtleSituationChange.Cleared:
+					DrawingInstructions.Clear();
+					break;
+
+				case TurtleSituationChange.None:
+				case TurtleSituationChange.Turned:
+					// Do nothing
+					break;
+
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+
 			DoTurtle(newSituation);
 			LogoController.CurrentSituation = newSituation;
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using MhsLogoController;
 using MhsLogoParser;
@@ -7,9 +8,6 @@ namespace MhsLogoUI.Commands
 {
 	public class ParseProgramCommand : ICommand
 	{
-		public event EventHandler<ParseErrorEventArgs> ParseResult;
-		public event EventHandler<LogoCommandEventArgs> LogoCommand;
-
 		#region ICommand Members
 
 		public event EventHandler CanExecuteChanged;
@@ -19,8 +17,8 @@ namespace MhsLogoUI.Commands
 			var program = (string) parameter;
 			try
 			{
-				var commands = LogoController.CreateAndParse(program);
-				foreach (var logoCommand in commands)
+				ICollection<ILogoCommand> commands = LogoController.CreateAndParse(program);
+				foreach (ILogoCommand logoCommand in commands)
 				{
 					var innerRepeatCommand = logoCommand as LogoRepeatCommand;
 					if (innerRepeatCommand != null)
@@ -46,6 +44,16 @@ namespace MhsLogoUI.Commands
 				}
 			}
 		}
+
+		public bool CanExecute(object parameter)
+		{
+			return true;
+		}
+
+		#endregion
+
+		public event EventHandler<ParseErrorEventArgs> ParseResult;
+		public event EventHandler<LogoCommandEventArgs> LogoCommand;
 
 		private void FireRepeatCommands(LogoRepeatCommand repeatCommand)
 		{
@@ -83,12 +91,5 @@ namespace MhsLogoUI.Commands
 				handler(this, e);
 			}
 		}
-
-		public bool CanExecute(object parameter)
-		{
-			return true;
-		}
-
-		#endregion
 	}
 }

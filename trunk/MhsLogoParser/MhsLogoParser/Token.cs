@@ -10,6 +10,7 @@ namespace MhsLogoParser
 		[TokenAsText("LEFT")] LEFT,
 		[TokenAsText("RIGHT")] RIGHT,
 		[TokenAsText("NUMBER")] NUMBER,
+		[TokenAsText("CLEAR")] CLEAR,
 		[TokenAsText("[")] LBRACKET,
 		[TokenAsText("]")] RBRACKET,
 		EOF,
