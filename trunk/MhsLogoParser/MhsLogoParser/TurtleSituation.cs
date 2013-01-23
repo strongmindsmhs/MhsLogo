@@ -5,9 +5,16 @@ namespace MhsLogoParser
 	public class TurtleSituation
 	{
 		private static readonly DefaultTurtleSituation defaultSituation = new DefaultTurtleSituation();
+
+		public TurtleSituation()
+		{
+			Change = TurtleSituationChange.None;
+		}
+
 		public virtual int Angle { get; set; }
 		public virtual int TurnAngle { get; set; }
 		public virtual Position Position { get; set; }
+		public TurtleSituationChange Change { get; set; }
 
 		public static DefaultTurtleSituation DefaultSituation
 		{

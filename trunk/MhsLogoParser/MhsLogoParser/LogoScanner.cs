@@ -5,7 +5,8 @@ namespace MhsLogoParser
 {
 	public class LogoScanner
 	{
-		private readonly Token[] reserved = new[] {Token.FORWARD, Token.BACK, Token.RIGHT, Token.LEFT, Token.REPEAT};
+		private readonly Token[] reserved = new[]
+		                                    	{Token.CLEAR, Token.FORWARD, Token.BACK, Token.RIGHT, Token.LEFT, Token.REPEAT};
 
 		#region Privates
 
