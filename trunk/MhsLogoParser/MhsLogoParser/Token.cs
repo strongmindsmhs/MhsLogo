@@ -11,6 +11,8 @@ namespace MhsLogoParser
 		[TokenAsText("RIGHT")] RIGHT,
 		[TokenAsText("NUMBER")] NUMBER,
 		[TokenAsText("CLEAR")] CLEAR,
+		[TokenAsText("MOVETO")] MOVETO,
+		[TokenAsText(",")] COMMA,
 		[TokenAsText("[")] LBRACKET,
 		[TokenAsText("]")] RBRACKET,
 		EOF,

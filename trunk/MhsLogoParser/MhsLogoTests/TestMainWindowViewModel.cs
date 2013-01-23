@@ -10,8 +10,7 @@ namespace MhsLogoTests
 	[TestFixture]
 	public class TestMainWindowViewModel
 	{
-		private ParseProgramCommand programCommand;
-		private MainWindowViewModel sut;
+		#region Setup/Teardown
 
 		[SetUp]
 		public void SetUp()
@@ -21,11 +20,16 @@ namespace MhsLogoTests
 			sut = new MainWindowViewModel(programCommand);
 		}
 
+		#endregion
+
+		private ParseProgramCommand programCommand;
+		private MainWindowViewModel sut;
+
 		private static void OnProgramCommandParseResult(object sender, ParseErrorEventArgs e)
 		{
 			if (e.Error)
 			{
-				throw new ApplicationException("Unexpected error");
+				throw new ApplicationException("Unexpected error: " + e.ErrorMessage);
 			}
 		}
 
@@ -51,6 +55,15 @@ namespace MhsLogoTests
 			Assert.AreEqual(1, sut.DrawingInstructions.Count);
 			Assert.AreEqual(TurtleSituation.DefaultSituation.Position.X, LogoController.CurrentSituation.Position.X);
 			Assert.AreEqual(TurtleSituation.DefaultSituation.Position.Y, LogoController.CurrentSituation.Position.Y);
+		}
+
+		[Test, RequiresSTA]
+		public void CanHandleMoveCommand()
+		{
+			programCommand.Execute("MOVETO 100,100");
+			Assert.AreEqual(1, sut.DrawingInstructions.Count);
+			Assert.AreEqual(100, LogoController.CurrentSituation.Position.X);
+			Assert.AreEqual(100, LogoController.CurrentSituation.Position.Y);
 		}
 	}
 }
