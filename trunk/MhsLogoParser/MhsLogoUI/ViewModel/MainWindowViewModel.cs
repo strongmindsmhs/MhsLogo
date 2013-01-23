@@ -98,6 +98,7 @@ namespace MhsLogoUI.ViewModel
 					DrawingInstructions.Clear();
 					break;
 
+				case TurtleSituationChange.Positioned:
 				case TurtleSituationChange.None:
 				case TurtleSituationChange.Turned:
 					// Do nothing

@@ -37,7 +37,9 @@ namespace MhsLogoParser
 			}
 		}
 
-		// <logo-sentence> ::= FORWARD <integer>
+		// <logo-sentence> ::= CLEAR
+		//									 | MOVETO <integer> , <integer>
+		//									 | FORWARD <integer>
 		//                   | BACK <integer>
 		//                   | LEFT <integer>
 		//                   | RIGHT <integer>
@@ -52,6 +54,16 @@ namespace MhsLogoParser
 				case Token.CLEAR:
 					Match(nextToken);
 					result = new LogoClearCommand();
+					break;
+
+				case Token.MOVETO:
+					Match(nextToken);
+					Match(Token.NUMBER);
+					var numberXRecord = new NumberRecord(nextToken, scanner.ScanBuffer);
+					Match(Token.COMMA);
+					Match(Token.NUMBER);
+					var numberYRecord = new NumberRecord(nextToken, scanner.ScanBuffer);
+					result = new LogoPositionCommand(numberXRecord, numberYRecord);
 					break;
 
 				case Token.FORWARD:

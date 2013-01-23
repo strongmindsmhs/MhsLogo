@@ -51,6 +51,7 @@
     <Compile Include="LogoMoveCommand.cs" />
     <Compile Include="LogoErrorCode.cs" />
     <Compile Include="LogoParser.cs" />
+    <Compile Include="LogoPositionCommand.cs" />
     <Compile Include="LogoRepeatCommand.cs" />
     <Compile Include="LogoScanner.cs" />
     <Compile Include="LogoScannerException.cs" />

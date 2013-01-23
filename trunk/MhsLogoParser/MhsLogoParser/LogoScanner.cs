@@ -6,7 +6,10 @@ namespace MhsLogoParser
 	public class LogoScanner
 	{
 		private readonly Token[] reserved = new[]
-		                                    	{Token.CLEAR, Token.FORWARD, Token.BACK, Token.RIGHT, Token.LEFT, Token.REPEAT};
+		                                    	{
+		                                    		Token.CLEAR, Token.MOVETO, Token.FORWARD, Token.BACK, Token.RIGHT, Token.LEFT,
+		                                    		Token.REPEAT
+		                                    	};
 
 		#region Privates
 
@@ -36,60 +39,67 @@ namespace MhsLogoParser
 			while (idx < rawContents.Length)
 			{
 				ch = rawContents[idx];
-				if (ch == '[')
+				switch (ch)
 				{
-					idx++;
-					return Token.LBRACKET;
-				}
-				else if (ch == ']')
-				{
-					idx++;
-					return Token.RBRACKET;
-				}
-				else if (char.IsDigit(ch))
-				{
-					ScanBuffer = ch.ToString();
-					idx++;
-					while (idx < rawContents.Length)
-					{
-						ch = rawContents[idx];
+					case '[':
+						idx++;
+						return Token.LBRACKET;
+
+					case ']':
+						idx++;
+						return Token.RBRACKET;
+
+					case ',':
+						idx++;
+						return Token.COMMA;
+
+					default:
 						if (char.IsDigit(ch))
 						{
-							ScanBuffer += ch;
+							ScanBuffer = ch.ToString();
 							idx++;
+							while (idx < rawContents.Length)
+							{
+								ch = rawContents[idx];
+								if (char.IsDigit(ch))
+								{
+									ScanBuffer += ch;
+									idx++;
+								}
+								else break;
+							}
+							return Token.NUMBER;
 						}
-						else break;
-					}
-					return Token.NUMBER;
-				}
-				else if (char.IsLetter(ch))
-				{
-					ScanBuffer = ch.ToString();
-					idx++;
-					while (idx < rawContents.Length)
-					{
-						ch = rawContents[idx];
-						if (char.IsLetter(ch))
+						else if (char.IsLetter(ch))
 						{
-							ScanBuffer += ch;
+							ScanBuffer = ch.ToString();
+							idx++;
+							while (idx < rawContents.Length)
+							{
+								ch = rawContents[idx];
+								if (char.IsLetter(ch))
+								{
+									ScanBuffer += ch;
+									idx++;
+								}
+								else break;
+							}
+							Token lookup;
+							if (LookupReserved(ScanBuffer, out lookup))
+							{
+								return lookup;
+							}
+							LexicalError(String.Format("Lexical error: Unrecognized keyword '{0}'", ScanBuffer));
+						}
+						else if (char.IsWhiteSpace(ch))
+						{
 							idx++;
 						}
-						else break;
-					}
-					Token lookup;
-					if (LookupReserved(ScanBuffer, out lookup))
-					{
-						return lookup;
-					}
-					LexicalError(String.Format("Lexical error: Unrecognized keyword '{0}'", ScanBuffer));
-				}
-				else if (char.IsWhiteSpace(ch))
-				{
-					idx++;
-				}
-				else
-				{
-					LexicalError(String.Format("Lexical error at '{0}' ('{1}')", ch, ScanBuffer));
+						else
+						{
+							LexicalError(String.Format("Lexical error at '{0}' ('{1}')", ch, ScanBuffer));
+						}
+						break;
 				}
 			}
 			return Token.EOF;

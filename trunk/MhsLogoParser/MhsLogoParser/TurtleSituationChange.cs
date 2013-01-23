@@ -5,6 +5,7 @@
 		None,
 		Cleared,
 		Moved,
-		Turned
+		Turned,
+		Positioned
 	}
 }

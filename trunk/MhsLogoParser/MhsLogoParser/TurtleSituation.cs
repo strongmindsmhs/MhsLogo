@@ -2,7 +2,7 @@
 
 namespace MhsLogoParser
 {
-	public class TurtleSituation
+	public class TurtleSituation : ICloneable
 	{
 		private static readonly DefaultTurtleSituation defaultSituation = new DefaultTurtleSituation();
 
@@ -20,6 +20,15 @@ namespace MhsLogoParser
 		{
 			get { return defaultSituation; }
 		}
+
+		#region ICloneable Members
+
+		public object Clone()
+		{
+			return new TurtleSituation {Angle = Angle, TurnAngle = TurnAngle, Position = Position, Change = Change};
+		}
+
+		#endregion
 
 		#region Nested type: DefaultTurtleSituation
 
