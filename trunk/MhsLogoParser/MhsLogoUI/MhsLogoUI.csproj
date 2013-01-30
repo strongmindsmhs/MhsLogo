@@ -61,7 +61,18 @@
     <Compile Include="Commands\LogoCommandEventArgs.cs" />
     <Compile Include="Commands\ParseErrorEventArgs.cs" />
     <Compile Include="Commands\ParseProgramCommand.cs" />
+    <Compile Include="ViewModel\ConsoleViewModel.cs" />
+    <Compile Include="View\ConsoleView.xaml.cs">
+      <DependentUpon>ConsoleView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="View\RoutineView.xaml.cs">
+      <DependentUpon>RoutineView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\ConsoleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -76,6 +87,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\RoutineView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

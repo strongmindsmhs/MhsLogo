@@ -15,9 +15,8 @@ namespace MhsLogoTests
 		[SetUp]
 		public void SetUp()
 		{
-			programCommand = new ParseProgramCommand();
-			programCommand.ParseResult += OnProgramCommandParseResult;
-			sut = new MainWindowViewModel(programCommand);
+			ParseProgramCommand.Instance.ParseResult += OnProgramCommandParseResult;
+			sut = new MainWindowViewModel();
 		}
 
 		#endregion

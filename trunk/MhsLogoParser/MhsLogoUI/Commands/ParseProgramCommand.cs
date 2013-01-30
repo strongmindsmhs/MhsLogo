@@ -8,6 +8,21 @@ namespace MhsLogoUI.Commands
 {
 	public class ParseProgramCommand : ICommand
 	{
+		#region Singleton implementation
+
+		private static readonly ParseProgramCommand instance = new ParseProgramCommand();
+
+		private ParseProgramCommand()
+		{
+		}
+
+		public static ParseProgramCommand Instance
+		{
+			get { return instance; }
+		}
+
+		#endregion
+
 		#region ICommand Members
 
 		public event EventHandler CanExecuteChanged;
