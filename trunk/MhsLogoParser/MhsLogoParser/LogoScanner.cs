@@ -70,6 +70,10 @@ namespace MhsLogoParser
 							}
 							return Token.NUMBER;
 						}
+							//else if (char.IsWhiteSpace(ch))
+							//{
+							//  idx++;
+							//}
 						else if (char.IsLetter(ch))
 						{
 							ScanBuffer = ch.ToString();

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using MhsLogoController;
@@ -11,23 +10,15 @@ namespace MhsLogoUI.ViewModel
 {
 	public class MainWindowViewModel : BaseViewModel
 	{
-		private readonly ParseProgramCommand parseProgramCommand;
-
 		private readonly Polygon turtleShape;
 		private ObservableCollection<Shape> drawingInstructions = new ObservableCollection<Shape>();
 
 		private string parseError;
-		private string programCommand;
 
-		public MainWindowViewModel() : this(new ParseProgramCommand())
+		public MainWindowViewModel()
 		{
-		}
-
-		public MainWindowViewModel(ParseProgramCommand parseCommand)
-		{
-			parseProgramCommand = parseCommand;
-			parseProgramCommand.ParseResult += OnParseProgramCommandResult;
-			parseProgramCommand.LogoCommand += OnLogoCommand;
+			ParseProgramCommand.Instance.LogoCommand += OnLogoCommand;
+			ParseProgramCommand.Instance.ParseResult += OnParseProgramCommandResult;
 			turtleShape = new Polygon();
 			turtleShape.ToTurtle(LogoController.CurrentSituation);
 			DrawingInstructions.Add(turtleShape);
@@ -43,21 +34,6 @@ namespace MhsLogoUI.ViewModel
 			}
 		}
 
-		public string ProgramCommand
-		{
-			get { return programCommand; }
-			set
-			{
-				programCommand = value;
-				OnPropertyChanged("ProgramCommand");
-			}
-		}
-
-		public ICommand ParseProgramCommand
-		{
-			get { return parseProgramCommand; }
-		}
-
 		public ObservableCollection<Shape> DrawingInstructions
 		{
 			get { return drawingInstructions; }
@@ -71,7 +47,6 @@ namespace MhsLogoUI.ViewModel
 		private void OnParseProgramCommandResult(object sender, ParseErrorEventArgs e)
 		{
 			ParseError = e.ErrorMessage;
-			ProgramCommand = e.ProgramCommand;
 		}
 
 		private void OnLogoCommand(object sender, LogoCommandEventArgs e)
