@@ -5,11 +5,11 @@ using MhsUtility;
 
 namespace MhsLogoParser
 {
-	public class LogoDefineRoutineCommand : ILogoCommand
+	public class LogoDefineRoutineCommand : BaseLogoCommand
 	{
-		private readonly List<ILogoCommand> commands = new List<ILogoCommand>();
+		private readonly List<BaseLogoCommand> commands = new List<BaseLogoCommand>();
 
-		public LogoDefineRoutineCommand(IdentifierRecord identifierRecord, IEnumerable<ILogoCommand> routineCommands)
+		public LogoDefineRoutineCommand(IdentifierRecord identifierRecord, IEnumerable<BaseLogoCommand> routineCommands)
 		{
 			Name = identifierRecord.Identifier;
 			commands.AddRange(routineCommands);
@@ -17,7 +17,7 @@ namespace MhsLogoParser
 
 		public string Name { get; set; }
 
-		public ReadOnlyCollection<ILogoCommand> Commands
+		public ReadOnlyCollection<BaseLogoCommand> Commands
 		{
 			get { return commands.AsReadOnly(); }
 		}

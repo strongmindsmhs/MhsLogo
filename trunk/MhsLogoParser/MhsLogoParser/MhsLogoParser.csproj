@@ -48,9 +48,8 @@
   <ItemGroup>
     <Compile Include="LogoCommands\ILogoCommandEvent.cs" />
     <Compile Include="LogoCommands\LogoCommandEvent.cs" />
-    <Compile Include="LogoCommands\LogoCommandEventArgs.cs" />
     <Compile Include="Records\IdentifierRecord.cs" />
-    <Compile Include="LogoCommands\ILogoCommand.cs" />
+    <Compile Include="LogoCommands\BaseLogoCommand.cs" />
     <Compile Include="LogoCommands\LogoClearCommand.cs" />
     <Compile Include="LogoCommands\LogoDefineRoutineCommand.cs" />
     <Compile Include="LogoCommands\LogoMoveCommand.cs" />

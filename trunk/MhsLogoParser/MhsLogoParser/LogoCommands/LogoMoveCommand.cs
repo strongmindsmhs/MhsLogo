@@ -4,7 +4,7 @@ using MhsUtility;
 
 namespace MhsLogoParser
 {
-	public class LogoMoveCommand : ILogoCommand
+	public class LogoMoveCommand : BaseLogoCommand
 	{
 		public LogoMoveCommand(NumberRecord numberRecord)
 		{

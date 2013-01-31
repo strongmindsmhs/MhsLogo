@@ -2,16 +2,16 @@
 {
 	public class LogoCommandEvent : ILogoCommandEvent
 	{
-		private readonly ILogoCommand command;
+		private readonly BaseLogoCommand command;
 
-		public LogoCommandEvent(ILogoCommand logoCommand)
+		public LogoCommandEvent(BaseLogoCommand logoCommand)
 		{
 			command = logoCommand;
 		}
 
 		#region ILogoCommandEvent Members
 
-		public ILogoCommand LogoCommand
+		public BaseLogoCommand LogoCommand
 		{
 			get { return command; }
 		}

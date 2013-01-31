@@ -50,8 +50,8 @@ namespace MhsLogoUI.Commands
 			var program = (string) parameter;
 			try
 			{
-				ICollection<ILogoCommand> commands = LogoController.CreateAndParse(program);
-				foreach (ILogoCommand logoCommand in commands)
+				ICollection<BaseLogoCommand> commands = LogoController.CreateAndParse(program);
+				foreach (BaseLogoCommand logoCommand in commands)
 				{
 					logoCommand.Execute();
 				}
