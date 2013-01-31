@@ -58,7 +58,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\LogoCommandEventArgs.cs" />
     <Compile Include="Commands\ParseErrorEventArgs.cs" />
     <Compile Include="Commands\ParseProgramCommand.cs" />
     <Compile Include="ViewModel\ConsoleViewModel.cs" />
@@ -124,6 +123,10 @@
     <ProjectReference Include="..\MhsLogoParser\MhsLogoParser.csproj">
       <Project>{554847CC-16AE-4287-AC93-461FB86E182E}</Project>
       <Name>MhsLogoParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MhsUtility\MhsUtility.csproj">
+      <Project>{0C715C0C-DE4E-4E61-8847-23F6B59C3DE6}</Project>
+      <Name>MhsUtility</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

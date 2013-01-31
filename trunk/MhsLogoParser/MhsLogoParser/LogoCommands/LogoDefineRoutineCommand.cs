@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using MhsLogoParser.LogoCommands;
+using MhsUtility;
 
 namespace MhsLogoParser
 {
 	public class LogoDefineRoutineCommand : ILogoCommand
 	{
-		public string Name { get; set; }
-
 		private readonly List<ILogoCommand> commands = new List<ILogoCommand>();
-
-		public ReadOnlyCollection<ILogoCommand> Commands
-		{
-			get 
-			{
-				return commands.AsReadOnly();
-			}
-		}
 
 		public LogoDefineRoutineCommand(IdentifierRecord identifierRecord, IEnumerable<ILogoCommand> routineCommands)
 		{
@@ -24,13 +15,16 @@ namespace MhsLogoParser
 			commands.AddRange(routineCommands);
 		}
 
-		#region ILogoCommand Members
+		public string Name { get; set; }
 
-		public TurtleSituation CalculateSituation(TurtleSituation currentSituation)
+		public ReadOnlyCollection<ILogoCommand> Commands
 		{
-			throw new NotImplementedException();
+			get { return commands.AsReadOnly(); }
 		}
 
-		#endregion
+		public override void Execute()
+		{
+			DomainEvents.Raise(new LogoCommandEvent(this));
+		}
 	}
 }

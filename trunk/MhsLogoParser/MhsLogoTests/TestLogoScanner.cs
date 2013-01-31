@@ -26,8 +26,8 @@ namespace MhsLogoTests
 			var expectedTokens = new[]
 			                     	{
 			                     		Token.CLEAR, Token.TO, Token.IDENTIFIER, Token.REPEAT, Token.NUMBER, Token.LBRACKET,
-			                     		Token.FORWARD, Token.NUMBER, Token.LEFT, Token.NUMBER, Token.RBRACKET, Token.END, 
-															Token.MOVETO, Token.NUMBER, Token.COMMA, Token.NUMBER, Token.EOF
+			                     		Token.FORWARD, Token.NUMBER, Token.LEFT, Token.NUMBER, Token.RBRACKET, Token.END,
+			                     		Token.MOVETO, Token.NUMBER, Token.COMMA, Token.NUMBER, Token.EOF
 			                     	};
 			var scanner = new LogoScanner(INPUT);
 			foreach (Token expectedToken in expectedTokens)

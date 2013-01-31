@@ -1,16 +1,20 @@
-﻿namespace MhsLogoParser
+﻿using MhsLogoParser.LogoCommands;
+using MhsUtility;
+
+namespace MhsLogoParser
 {
 	public class LogoClearCommand : ILogoCommand
 	{
-		#region ILogoCommand Members
-
-		public TurtleSituation CalculateSituation(TurtleSituation currentSituation)
+		public override TurtleSituation CalculateSituation(TurtleSituation currentSituation)
 		{
 			TurtleSituation.DefaultTurtleSituation result = TurtleSituation.DefaultSituation;
 			result.Change = TurtleSituationChange.Cleared;
 			return result;
 		}
 
-		#endregion
+		public override void Execute()
+		{
+			DomainEvents.Raise(new LogoCommandEvent(this));
+		}
 	}
 }

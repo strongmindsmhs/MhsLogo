@@ -1,7 +1,14 @@
 ﻿namespace MhsLogoParser
 {
-	public interface ILogoCommand
+	public abstract class ILogoCommand
 	{
-		TurtleSituation CalculateSituation(TurtleSituation currentSituation);
+		public virtual void Execute()
+		{
+		}
+
+		public virtual TurtleSituation CalculateSituation(TurtleSituation currentSituation)
+		{
+			return currentSituation;
+		}
 	}
 }

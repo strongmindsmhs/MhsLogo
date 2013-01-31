@@ -4,11 +4,13 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using MhsLogoController;
 using MhsLogoParser;
+using MhsLogoParser.LogoCommands;
 using MhsLogoUI.Commands;
+using MhsUtility;
 
 namespace MhsLogoUI.ViewModel
 {
-	public class MainWindowViewModel : BaseViewModel
+	public class MainWindowViewModel : BaseViewModel, IDomainEventHandler<ILogoCommandEvent>
 	{
 		private readonly Polygon turtleShape;
 		private ObservableCollection<Shape> drawingInstructions = new ObservableCollection<Shape>();
@@ -17,8 +19,8 @@ namespace MhsLogoUI.ViewModel
 
 		public MainWindowViewModel(ParseProgramCommand parseProgramCommand)
 		{
-			parseProgramCommand.LogoCommand += OnLogoCommand;
 			parseProgramCommand.ParseResult += OnParseProgramCommandResult;
+			DomainEvents.Register<ILogoCommandEvent>(Handle);
 			turtleShape = new Polygon();
 			turtleShape.ToTurtle(LogoController.CurrentSituation);
 			DrawingInstructions.Add(turtleShape);
@@ -49,12 +51,9 @@ namespace MhsLogoUI.ViewModel
 			}
 		}
 
-		private void OnParseProgramCommandResult(object sender, ParseErrorEventArgs e)
-		{
-			ParseError = e.ErrorMessage;
-		}
+		#region IDomainEventHandler<ILogoCommandEvent> Members
 
-		private void OnLogoCommand(object sender, LogoCommandEventArgs e)
+		public void Handle(ILogoCommandEvent e)
 		{
 			TurtleSituation currentSituation = LogoController.CurrentSituation;
 			TurtleSituation newSituation = e.LogoCommand.CalculateSituation(currentSituation);
@@ -90,6 +89,13 @@ namespace MhsLogoUI.ViewModel
 
 			DoTurtle(newSituation);
 			LogoController.CurrentSituation = newSituation;
+		}
+
+		#endregion
+
+		private void OnParseProgramCommandResult(object sender, ParseErrorEventArgs e)
+		{
+			ParseError = e.ErrorMessage;
 		}
 
 		private void DoTurtle(TurtleSituation newSituation)

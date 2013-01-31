@@ -1,4 +1,6 @@
 ﻿using System;
+using MhsLogoParser.LogoCommands;
+using MhsUtility;
 
 namespace MhsLogoParser
 {
@@ -11,9 +13,7 @@ namespace MhsLogoParser
 
 		public int Distance { get; private set; }
 
-		#region ILogoCommand Members
-
-		public TurtleSituation CalculateSituation(TurtleSituation currentSituation)
+		public override TurtleSituation CalculateSituation(TurtleSituation currentSituation)
 		{
 			var result = new TurtleSituation();
 			int newX = Convert.ToInt32(Math.Round(Distance*Math.Cos(DegreesToRadian(currentSituation.Angle))));
@@ -29,7 +29,10 @@ namespace MhsLogoParser
 			return result;
 		}
 
-		#endregion
+		public override void Execute()
+		{
+			DomainEvents.Raise(new LogoCommandEvent(this));
+		}
 
 		private int CalculateY(TurtleSituation currentSituation, int newY)
 		{

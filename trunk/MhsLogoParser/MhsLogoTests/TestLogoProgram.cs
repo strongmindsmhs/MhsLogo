@@ -52,7 +52,8 @@ namespace MhsLogoTests
 		[Test]
 		public void CanRepeatRepeatLogoProgram()
 		{
-			ICollection<ILogoCommand> programCommands = LogoController.CreateAndParse("REPEAT 3 [ FORWARD 1 REPEAT 2 [ FORWARD 1 ] ]");
+			ICollection<ILogoCommand> programCommands =
+				LogoController.CreateAndParse("REPEAT 3 [ FORWARD 1 REPEAT 2 [ FORWARD 1 ] ]");
 			var firstRepeat = programCommands.ElementAt(0) as LogoRepeatCommand;
 			Assert.IsNotNull(firstRepeat);
 			Assert.AreEqual(3, firstRepeat.Repeat);

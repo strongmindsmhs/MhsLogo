@@ -1,4 +1,7 @@
-﻿namespace MhsLogoParser
+﻿using MhsLogoParser.LogoCommands;
+using MhsUtility;
+
+namespace MhsLogoParser
 {
 	public class LogoPositionCommand : ILogoCommand
 	{
@@ -11,9 +14,7 @@
 		public int X { get; set; }
 		public int Y { get; set; }
 
-		#region ILogoCommand Members
-
-		public TurtleSituation CalculateSituation(TurtleSituation currentSituation)
+		public override TurtleSituation CalculateSituation(TurtleSituation currentSituation)
 		{
 			var result = (TurtleSituation) currentSituation.Clone();
 			result.Position = new Position {X = X, Y = Y};
@@ -21,6 +22,9 @@
 			return result;
 		}
 
-		#endregion
+		public override void Execute()
+		{
+			DomainEvents.Raise(new LogoCommandEvent(this));
+		}
 	}
 }

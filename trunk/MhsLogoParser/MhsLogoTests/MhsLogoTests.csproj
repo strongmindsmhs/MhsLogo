@@ -72,6 +72,10 @@
       <Project>{5B13590F-DD08-4AA9-A030-ACD2CC1AA206}</Project>
       <Name>MhsLogoUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MhsUtility\MhsUtility.csproj">
+      <Project>{0C715C0C-DE4E-4E61-8847-23F6B59C3DE6}</Project>
+      <Name>MhsUtility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="LogoExamples.txt" />
