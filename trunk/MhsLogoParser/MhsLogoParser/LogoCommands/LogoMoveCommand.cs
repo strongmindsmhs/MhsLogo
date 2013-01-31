@@ -1,6 +1,4 @@
 ﻿using System;
-using MhsLogoParser.LogoCommands;
-using MhsUtility;
 
 namespace MhsLogoParser
 {
@@ -27,11 +25,6 @@ namespace MhsLogoParser
 			result.TurnAngle = currentSituation.TurnAngle;
 			result.Change = TurtleSituationChange.Moved;
 			return result;
-		}
-
-		public override void Execute()
-		{
-			DomainEvents.Raise(new LogoCommandEvent(this));
 		}
 
 		private int CalculateY(TurtleSituation currentSituation, int newY)
