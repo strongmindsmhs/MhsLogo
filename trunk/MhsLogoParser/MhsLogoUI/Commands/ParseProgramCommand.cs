@@ -5,7 +5,6 @@ using MhsLogoController;
 using MhsLogoParser;
 
 namespace MhsLogoUI.Commands
-
 {
 	public class ParseProgramCommand : ICommand
 	{
@@ -56,7 +55,7 @@ namespace MhsLogoUI.Commands
 				{
 					logoCommand.Execute();
 				}
-				FireParseResult(new ParseErrorEventArgs(false, String.Empty, String.Empty));
+				FireParseResult(new ParseErrorEventArgs(false));
 			}
 			catch (Exception ex)
 			{

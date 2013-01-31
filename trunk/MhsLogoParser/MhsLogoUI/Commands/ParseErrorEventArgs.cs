@@ -11,6 +11,11 @@ namespace MhsLogoUI.Commands
 			ProgramCommand = programCommand;
 		}
 
+		public ParseErrorEventArgs(bool error): 
+			this(error, string.Empty, string.Empty)
+		{
+		}
+
 		public bool Error { get; private set; }
 		public string ErrorMessage { get; private set; }
 		public string ProgramCommand { get; private set; }
