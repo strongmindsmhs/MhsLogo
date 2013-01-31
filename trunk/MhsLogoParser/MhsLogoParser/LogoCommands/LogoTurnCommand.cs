@@ -1,4 +1,6 @@
 ﻿using System;
+using MhsLogoParser.LogoCommands;
+using MhsUtility;
 
 namespace MhsLogoParser
 {
@@ -11,9 +13,7 @@ namespace MhsLogoParser
 
 		public int TurnAngle { get; private set; }
 
-		#region ILogoCommand Members
-
-		public TurtleSituation CalculateSituation(TurtleSituation currentSituation)
+		public override TurtleSituation CalculateSituation(TurtleSituation currentSituation)
 		{
 			var result = new TurtleSituation();
 			int newAngle;
@@ -40,6 +40,9 @@ namespace MhsLogoParser
 			return result;
 		}
 
-		#endregion
+		public override void Execute()
+		{
+			DomainEvents.Raise(new LogoCommandEvent(this));
+		}
 	}
 }

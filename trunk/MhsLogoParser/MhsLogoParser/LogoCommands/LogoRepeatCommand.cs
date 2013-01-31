@@ -13,20 +13,22 @@ namespace MhsLogoParser
 			commands.AddRange(logoCommands);
 		}
 
+		public int Repeat { get; private set; }
+
 		public ReadOnlyCollection<ILogoCommand> Commands
 		{
 			get { return commands.AsReadOnly(); }
 		}
 
-		public int Repeat { get; private set; }
-
-		#region ILogoCommand Members
-
-		public TurtleSituation CalculateSituation(TurtleSituation currentSituation)
+		public override void Execute()
 		{
-			return currentSituation;
+			for (int i = 0; i < Repeat; i++)
+			{
+				foreach (ILogoCommand logoCommand in Commands)
+				{
+					logoCommand.Execute();
+				}
+			}
 		}
-
-		#endregion
 	}
 }

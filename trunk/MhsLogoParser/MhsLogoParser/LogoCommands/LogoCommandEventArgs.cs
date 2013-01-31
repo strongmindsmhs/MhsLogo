@@ -1,7 +1,6 @@
 ﻿using System;
-using MhsLogoParser;
 
-namespace MhsLogoUI.Commands
+namespace MhsLogoParser.LogoCommands
 {
 	public class LogoCommandEventArgs : EventArgs
 	{

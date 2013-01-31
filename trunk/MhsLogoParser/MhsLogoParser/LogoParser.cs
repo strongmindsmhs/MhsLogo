@@ -156,9 +156,9 @@ namespace MhsLogoParser
 		private static bool IsSentencePrefix(Token token)
 		{
 			return token == Token.CLEAR || token == Token.MOVETO ||
-						 token == Token.FORWARD || token == Token.BACK ||
-						 token == Token.LEFT || token == Token.RIGHT ||
-						 token == Token.REPEAT;
+			       token == Token.FORWARD || token == Token.BACK ||
+			       token == Token.LEFT || token == Token.RIGHT ||
+			       token == Token.REPEAT;
 		}
 	}
 }
