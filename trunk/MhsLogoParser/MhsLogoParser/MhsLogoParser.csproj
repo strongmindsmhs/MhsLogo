@@ -46,20 +46,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IdentifierRecord.cs" />
-    <Compile Include="ILogoCommand.cs" />
-    <Compile Include="LogoClearCommand.cs" />
-    <Compile Include="LogoDefineRoutineCommand.cs" />
-    <Compile Include="LogoMoveCommand.cs" />
+    <Compile Include="Records\IdentifierRecord.cs" />
+    <Compile Include="LogoCommands\ILogoCommand.cs" />
+    <Compile Include="LogoCommands\LogoClearCommand.cs" />
+    <Compile Include="LogoCommands\LogoDefineRoutineCommand.cs" />
+    <Compile Include="LogoCommands\LogoMoveCommand.cs" />
     <Compile Include="LogoErrorCode.cs" />
     <Compile Include="LogoParser.cs" />
-    <Compile Include="LogoPositionCommand.cs" />
-    <Compile Include="LogoRepeatCommand.cs" />
+    <Compile Include="LogoCommands\LogoPositionCommand.cs" />
+    <Compile Include="LogoCommands\LogoRepeatCommand.cs" />
     <Compile Include="LogoScanner.cs" />
     <Compile Include="LogoScannerException.cs" />
     <Compile Include="LogoSyntaxErrorException.cs" />
-    <Compile Include="LogoTurnCommand.cs" />
-    <Compile Include="NumberRecord.cs" />
+    <Compile Include="LogoCommands\LogoTurnCommand.cs" />
+    <Compile Include="Records\NumberRecord.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Token.cs" />
