@@ -20,6 +20,12 @@ namespace MhsLogoTests
 		}
 
 		[Test]
+		public void CanParseRoutine()
+		{
+			TestParseProgram("TO RECTANGLE REPEAT 4 [ FORWARD 100 LEFT 90 ] END");
+		}
+
+		[Test]
 		public void CanParseSimpleLogoProgram()
 		{
 			TestParseProgram("FORWARD 50");

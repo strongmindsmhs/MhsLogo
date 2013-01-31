@@ -13,7 +13,9 @@ namespace MhsLogoUI.Commands
 		private static volatile ParseProgramCommand instance;
 		private static readonly object syncRoot = new Object();
 
-		private ParseProgramCommand() {}
+		private ParseProgramCommand()
+		{
+		}
 
 		public static ParseProgramCommand Instance
 		{
@@ -45,7 +47,7 @@ namespace MhsLogoUI.Commands
 
 		public void Execute(object parameter)
 		{
-			var program = (string)parameter;
+			var program = (string) parameter;
 			try
 			{
 				ICollection<ILogoCommand> commands = LogoController.CreateAndParse(program);
