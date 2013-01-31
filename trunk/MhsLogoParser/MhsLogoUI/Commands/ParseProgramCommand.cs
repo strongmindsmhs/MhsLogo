@@ -10,15 +10,31 @@ namespace MhsLogoUI.Commands
 	{
 		#region Singleton implementation
 
-		private static readonly ParseProgramCommand instance = new ParseProgramCommand();
+		private static volatile ParseProgramCommand instance;
+		private static readonly object syncRoot = new Object();
 
-		private ParseProgramCommand()
-		{
-		}
+		private ParseProgramCommand() {}
 
 		public static ParseProgramCommand Instance
 		{
-			get { return instance; }
+			get
+			{
+				if (instance == null)
+				{
+					lock (syncRoot)
+					{
+						if (instance == null)
+							instance = new ParseProgramCommand();
+					}
+				}
+
+				return instance;
+			}
+		}
+
+		public void Clear()
+		{
+			instance = null;
 		}
 
 		#endregion
@@ -29,7 +45,7 @@ namespace MhsLogoUI.Commands
 
 		public void Execute(object parameter)
 		{
-			var program = (string) parameter;
+			var program = (string)parameter;
 			try
 			{
 				ICollection<ILogoCommand> commands = LogoController.CreateAndParse(program);

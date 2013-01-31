@@ -15,13 +15,18 @@ namespace MhsLogoUI.ViewModel
 
 		private string parseError;
 
-		public MainWindowViewModel()
+		public MainWindowViewModel(ParseProgramCommand parseProgramCommand)
 		{
-			ParseProgramCommand.Instance.LogoCommand += OnLogoCommand;
-			ParseProgramCommand.Instance.ParseResult += OnParseProgramCommandResult;
+			parseProgramCommand.LogoCommand += OnLogoCommand;
+			parseProgramCommand.ParseResult += OnParseProgramCommandResult;
 			turtleShape = new Polygon();
 			turtleShape.ToTurtle(LogoController.CurrentSituation);
 			DrawingInstructions.Add(turtleShape);
+		}
+
+		public MainWindowViewModel(): 
+			this(ParseProgramCommand.Instance)
+		{
 		}
 
 		public string ParseError
