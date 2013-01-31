@@ -17,6 +17,10 @@ namespace MhsLogoTests
 			var routine = programCommands.ElementAt(0) as LogoDefineRoutineCommand;
 			Assert.IsNotNull(routine);
 			Assert.AreEqual("RECTANGLE", routine.Name);
+			var firstCommand = routine.Commands[0] as LogoRepeatCommand;
+			Assert.IsNotNull(firstCommand);
+			Assert.AreEqual(4, firstCommand.Repeat);
+			Assert.AreEqual(2, firstCommand.Commands.Count());
 		}
 
 		[Test]
