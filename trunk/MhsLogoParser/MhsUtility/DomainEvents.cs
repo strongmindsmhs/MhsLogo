@@ -7,7 +7,7 @@ namespace MhsUtility
 	//
 	// Udi Dahan: http://www.udidahan.com/2009/06/14/domain-events-salvation/
 	//
-	// (Using Ninject as opposed to MS IContainer)
+	// (Using Ninject as opposed to IContainer)
 	//
 	public class DomainEvents
 	{
