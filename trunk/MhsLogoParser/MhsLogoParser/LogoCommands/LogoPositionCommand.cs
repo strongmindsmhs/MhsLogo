@@ -3,7 +3,7 @@ using MhsUtility;
 
 namespace MhsLogoParser
 {
-	public class LogoPositionCommand : ILogoCommand
+	public class LogoPositionCommand : BaseLogoCommand
 	{
 		public LogoPositionCommand(NumberRecord numberXRecord, NumberRecord numberYRecord)
 		{

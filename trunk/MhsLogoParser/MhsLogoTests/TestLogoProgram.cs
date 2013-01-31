@@ -12,7 +12,7 @@ namespace MhsLogoTests
 		[Test]
 		public void CanCreateLogoRoutine()
 		{
-			ICollection<ILogoCommand> programCommands =
+			ICollection<BaseLogoCommand> programCommands =
 				LogoController.CreateAndParse("TO RECTANGLE REPEAT 4 [ FORWARD 100 LEFT 90 ] END");
 			var routine = programCommands.ElementAt(0) as LogoDefineRoutineCommand;
 			Assert.IsNotNull(routine);
@@ -26,7 +26,7 @@ namespace MhsLogoTests
 		[Test]
 		public void CanCreateRepeatLogoProgram()
 		{
-			ICollection<ILogoCommand> programCommands = LogoController.CreateAndParse("REPEAT 4 [ FORWARD 100 LEFT 90 ]");
+			ICollection<BaseLogoCommand> programCommands = LogoController.CreateAndParse("REPEAT 4 [ FORWARD 100 LEFT 90 ]");
 			var firstCommand = programCommands.ElementAt(0) as LogoRepeatCommand;
 			Assert.IsNotNull(firstCommand);
 			Assert.AreEqual(4, firstCommand.Repeat);
@@ -36,7 +36,7 @@ namespace MhsLogoTests
 		[Test]
 		public void CanCreateTwoSentenceLogoProgram()
 		{
-			ICollection<ILogoCommand> programCommands = LogoController.CreateAndParse("FORWARD 100 LEFT 90");
+			ICollection<BaseLogoCommand> programCommands = LogoController.CreateAndParse("FORWARD 100 LEFT 90");
 			var firstCommand = programCommands.ElementAt(0) as LogoMoveCommand;
 			Assert.IsNotNull(firstCommand);
 			Assert.AreEqual(100, firstCommand.Distance);
@@ -52,7 +52,7 @@ namespace MhsLogoTests
 		[Test]
 		public void CanRepeatRepeatLogoProgram()
 		{
-			ICollection<ILogoCommand> programCommands =
+			ICollection<BaseLogoCommand> programCommands =
 				LogoController.CreateAndParse("REPEAT 3 [ FORWARD 1 REPEAT 2 [ FORWARD 1 ] ]");
 			var firstRepeat = programCommands.ElementAt(0) as LogoRepeatCommand;
 			Assert.IsNotNull(firstRepeat);

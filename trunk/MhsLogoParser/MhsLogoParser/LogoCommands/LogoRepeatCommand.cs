@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 
 namespace MhsLogoParser
 {
-	public class LogoRepeatCommand : ILogoCommand
+	public class LogoRepeatCommand : BaseLogoCommand
 	{
-		private readonly List<ILogoCommand> commands = new List<ILogoCommand>();
+		private readonly List<BaseLogoCommand> commands = new List<BaseLogoCommand>();
 
-		public LogoRepeatCommand(NumberRecord repeatNumber, IEnumerable<ILogoCommand> logoCommands)
+		public LogoRepeatCommand(NumberRecord repeatNumber, IEnumerable<BaseLogoCommand> logoCommands)
 		{
 			Repeat = repeatNumber.Number;
 			commands.AddRange(logoCommands);
@@ -15,7 +15,7 @@ namespace MhsLogoParser
 
 		public int Repeat { get; private set; }
 
-		public ReadOnlyCollection<ILogoCommand> Commands
+		public ReadOnlyCollection<BaseLogoCommand> Commands
 		{
 			get { return commands.AsReadOnly(); }
 		}
@@ -24,7 +24,7 @@ namespace MhsLogoParser
 		{
 			for (int i = 0; i < Repeat; i++)
 			{
-				foreach (ILogoCommand logoCommand in Commands)
+				foreach (BaseLogoCommand logoCommand in Commands)
 				{
 					logoCommand.Execute();
 				}

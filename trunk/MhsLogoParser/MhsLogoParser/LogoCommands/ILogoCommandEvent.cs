@@ -4,6 +4,6 @@ namespace MhsLogoParser.LogoCommands
 {
 	public interface ILogoCommandEvent : IDomainEvent
 	{
-		ILogoCommand LogoCommand { get; }
+		BaseLogoCommand LogoCommand { get; }
 	}
 }

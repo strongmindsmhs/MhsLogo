@@ -3,7 +3,7 @@ using MhsUtility;
 
 namespace MhsLogoParser
 {
-	public class LogoClearCommand : ILogoCommand
+	public class LogoClearCommand : BaseLogoCommand
 	{
 		public override TurtleSituation CalculateSituation(TurtleSituation currentSituation)
 		{

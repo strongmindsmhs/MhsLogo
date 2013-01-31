@@ -1,6 +1,6 @@
 ﻿namespace MhsLogoParser
 {
-	public abstract class ILogoCommand
+	public abstract class BaseLogoCommand
 	{
 		public virtual void Execute()
 		{

@@ -13,7 +13,7 @@ namespace MhsLogoController
 			set { currentSituation = value; }
 		}
 
-		public static ICollection<ILogoCommand> CreateAndParse(string programText)
+		public static ICollection<BaseLogoCommand> CreateAndParse(string programText)
 		{
 			var parser = new LogoParser(new LogoScanner(programText));
 			return parser.ParseLogoProgram();
