@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace MhsLogoParser
 {
@@ -6,9 +8,20 @@ namespace MhsLogoParser
 	{
 		public string Name { get; set; }
 
-		public LogoDefineRoutineCommand(IdentifierRecord identifierRecord)
+		private readonly List<ILogoCommand> commands = new List<ILogoCommand>();
+
+		public ReadOnlyCollection<ILogoCommand> Commands
+		{
+			get 
+			{
+				return commands.AsReadOnly();
+			}
+		}
+
+		public LogoDefineRoutineCommand(IdentifierRecord identifierRecord, IEnumerable<ILogoCommand> routineCommands)
 		{
 			Name = identifierRecord.Identifier;
+			commands.AddRange(routineCommands);
 		}
 
 		#region ILogoCommand Members

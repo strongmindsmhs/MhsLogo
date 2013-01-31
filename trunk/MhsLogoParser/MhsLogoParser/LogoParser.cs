@@ -24,13 +24,14 @@ namespace MhsLogoParser
 				Match(Token.TO);
 				Match(Token.IDENTIFIER);
 				var identifierRecord = new IdentifierRecord(scanner.ScanBuffer);
-				ILogoCommand logoSentence = ParseLogoSentence();
+				var routineCommands = new List<ILogoCommand>();
+				routineCommands.Add(ParseLogoSentence());
 				for (Token token = scanner.NextToken(); IsSentencePrefix(token); token = scanner.NextToken())
 				{
-					ParseLogoSentence();
+					routineCommands.Add(ParseLogoSentence());
 				}
 				Match(Token.END);
-				var routineCommand = new LogoDefineRoutineCommand(identifierRecord);
+				var routineCommand = new LogoDefineRoutineCommand(identifierRecord, routineCommands);
 				result.Add(routineCommand);
 			}
 			else
@@ -45,13 +46,6 @@ namespace MhsLogoParser
 			return result;
 		}
 
-		// <logo-sentence> ::= CLEAR
-		//									 | MOVETO <integer> , <integer>
-		//									 | FORWARD <integer>
-		//                   | BACK <integer>
-		//                   | LEFT <integer>
-		//                   | RIGHT <integer>
-		//                   | REPEAT <integer> [ <logo-sentence> { <logo-sentence> } ]
 		private ILogoCommand ParseLogoSentence()
 		{
 			ILogoCommand result = null;
@@ -59,50 +53,22 @@ namespace MhsLogoParser
 			switch (nextToken)
 			{
 				case Token.CLEAR:
-					Match(nextToken);
-					result = new LogoClearCommand();
+					result = ParseLogoClearCommand();
 					break;
 
 				case Token.MOVETO:
-					Match(nextToken);
-					Match(Token.NUMBER);
-					var numberXRecord = new NumberRecord(nextToken, scanner.ScanBuffer);
-					Match(Token.COMMA);
-					Match(Token.NUMBER);
-					var numberYRecord = new NumberRecord(nextToken, scanner.ScanBuffer);
-					result = new LogoPositionCommand(numberXRecord, numberYRecord);
+					result = ParseLogoMoveToCommand();
 					break;
 
 				case Token.FORWARD:
 				case Token.BACK:
 				case Token.LEFT:
 				case Token.RIGHT:
-					Match(nextToken);
-					Match(Token.NUMBER);
-					var numberRecord = new NumberRecord(nextToken, scanner.ScanBuffer);
-					if (nextToken == Token.FORWARD || nextToken == Token.BACK)
-					{
-						result = new LogoMoveCommand(numberRecord);
-					}
-					else
-					{
-						result = new LogoTurnCommand(numberRecord);
-					}
+					result = ParseLogoDirectionCommand(nextToken);
 					break;
 
 				case Token.REPEAT:
-					Match(nextToken);
-					Match(Token.NUMBER);
-					var repeatNumberRecord = new NumberRecord(Token.REPEAT, scanner.ScanBuffer);
-					Match(Token.LBRACKET);
-					var logoCommands = new List<ILogoCommand>();
-					logoCommands.Add(ParseLogoSentence());
-					for (Token token = scanner.NextToken(); IsSentencePrefix(token); token = scanner.NextToken())
-					{
-						logoCommands.Add(ParseLogoSentence());
-					}
-					Match(Token.RBRACKET);
-					result = new LogoRepeatCommand(repeatNumberRecord, logoCommands);
+					result = ParseLogoRepeatCommand();
 					break;
 
 				default:
@@ -113,12 +79,61 @@ namespace MhsLogoParser
 			return result;
 		}
 
-		private static bool IsSentencePrefix(Token token)
+		// <logo-sentence> ::= CLEAR
+		private ILogoCommand ParseLogoClearCommand()
 		{
-			return token == Token.CLEAR || token == Token.MOVETO ||
-			       token == Token.FORWARD || token == Token.BACK ||
-			       token == Token.LEFT || token == Token.RIGHT ||
-			       token == Token.REPEAT;
+			Match(Token.CLEAR);
+			return new LogoClearCommand();
+		}
+
+		// <logo-sentence> ::= MOVETO <integer> , <integer>
+		private ILogoCommand ParseLogoMoveToCommand()
+		{
+			Match(Token.MOVETO);
+			Match(Token.NUMBER);
+			var numberXRecord = new NumberRecord(Token.MOVETO, scanner.ScanBuffer);
+			Match(Token.COMMA);
+			Match(Token.NUMBER);
+			var numberYRecord = new NumberRecord(Token.MOVETO, scanner.ScanBuffer);
+			return new LogoPositionCommand(numberXRecord, numberYRecord);
+		}
+
+		// <logo-sentence> ::= FORWARD <integer>
+		//                   | BACK <integer>
+		//                   | LEFT <integer>
+		//                   | RIGHT <integer>
+		private ILogoCommand ParseLogoDirectionCommand(Token nextToken)
+		{
+			ILogoCommand result;
+			Match(nextToken);
+			Match(Token.NUMBER);
+			var numberRecord = new NumberRecord(nextToken, scanner.ScanBuffer);
+			if (nextToken == Token.FORWARD || nextToken == Token.BACK)
+			{
+				result = new LogoMoveCommand(numberRecord);
+			}
+			else
+			{
+				result = new LogoTurnCommand(numberRecord);
+			}
+			return result;
+		}
+
+		// <logo-sentence> ::= REPEAT <integer> [ <logo-sentence> { <logo-sentence> } ]
+		private ILogoCommand ParseLogoRepeatCommand()
+		{
+			Match(Token.REPEAT);
+			Match(Token.NUMBER);
+			var repeatNumberRecord = new NumberRecord(Token.REPEAT, scanner.ScanBuffer);
+			Match(Token.LBRACKET);
+			var logoCommands = new List<ILogoCommand>();
+			logoCommands.Add(ParseLogoSentence());
+			for (Token token = scanner.NextToken(); IsSentencePrefix(token); token = scanner.NextToken())
+			{
+				logoCommands.Add(ParseLogoSentence());
+			}
+			Match(Token.RBRACKET);
+			return new LogoRepeatCommand(repeatNumberRecord, logoCommands);
 		}
 
 		private void Match(Token token)
@@ -136,6 +151,14 @@ namespace MhsLogoParser
 		private void SyntaxError(string errorMessage, LogoErrorCode errorCode)
 		{
 			throw new LogoSyntaxErrorException(errorMessage, errorCode, scanner.ScanBuffer);
+		}
+
+		private static bool IsSentencePrefix(Token token)
+		{
+			return token == Token.CLEAR || token == Token.MOVETO ||
+						 token == Token.FORWARD || token == Token.BACK ||
+						 token == Token.LEFT || token == Token.RIGHT ||
+						 token == Token.REPEAT;
 		}
 	}
 }
