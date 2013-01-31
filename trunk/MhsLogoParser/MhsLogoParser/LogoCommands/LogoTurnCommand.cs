@@ -1,6 +1,4 @@
 ﻿using System;
-using MhsLogoParser.LogoCommands;
-using MhsUtility;
 
 namespace MhsLogoParser
 {
@@ -38,11 +36,6 @@ namespace MhsLogoParser
 			result.Position = currentSituation.Position;
 			result.Change = TurtleSituationChange.Turned;
 			return result;
-		}
-
-		public override void Execute()
-		{
-			DomainEvents.Raise(new LogoCommandEvent(this));
 		}
 	}
 }

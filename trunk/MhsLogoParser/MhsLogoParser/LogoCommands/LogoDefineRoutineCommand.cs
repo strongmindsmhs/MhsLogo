@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using MhsLogoParser.LogoCommands;
-using MhsUtility;
 
 namespace MhsLogoParser
 {
@@ -20,11 +18,6 @@ namespace MhsLogoParser
 		public ReadOnlyCollection<BaseLogoCommand> Commands
 		{
 			get { return commands.AsReadOnly(); }
-		}
-
-		public override void Execute()
-		{
-			DomainEvents.Raise(new LogoCommandEvent(this));
 		}
 	}
 }

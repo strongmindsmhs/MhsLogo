@@ -1,7 +1,4 @@
-﻿using MhsLogoParser.LogoCommands;
-using MhsUtility;
-
-namespace MhsLogoParser
+﻿namespace MhsLogoParser
 {
 	public class LogoClearCommand : BaseLogoCommand
 	{
@@ -10,11 +7,6 @@ namespace MhsLogoParser
 			TurtleSituation.DefaultTurtleSituation result = TurtleSituation.DefaultSituation;
 			result.Change = TurtleSituationChange.Cleared;
 			return result;
-		}
-
-		public override void Execute()
-		{
-			DomainEvents.Raise(new LogoCommandEvent(this));
 		}
 	}
 }
