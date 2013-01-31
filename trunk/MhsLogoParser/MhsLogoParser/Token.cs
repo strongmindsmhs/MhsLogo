@@ -15,6 +15,9 @@ namespace MhsLogoParser
 		[TokenAsText(",")] COMMA,
 		[TokenAsText("[")] LBRACKET,
 		[TokenAsText("]")] RBRACKET,
+		[TokenAsText("TO")] TO,
+		[TokenAsText("END")] END,
+		IDENTIFIER,
 		EOF,
 		NONE,
 	}

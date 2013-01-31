@@ -24,7 +24,7 @@ namespace MhsLogoUI.ViewModel
 			DrawingInstructions.Add(turtleShape);
 		}
 
-		public MainWindowViewModel(): 
+		public MainWindowViewModel() :
 			this(ParseProgramCommand.Instance)
 		{
 		}

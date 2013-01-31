@@ -46,8 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IdentifierRecord.cs" />
     <Compile Include="ILogoCommand.cs" />
     <Compile Include="LogoClearCommand.cs" />
+    <Compile Include="LogoDefineRoutineCommand.cs" />
     <Compile Include="LogoMoveCommand.cs" />
     <Compile Include="LogoErrorCode.cs" />
     <Compile Include="LogoParser.cs" />

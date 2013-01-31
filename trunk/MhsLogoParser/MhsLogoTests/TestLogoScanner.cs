@@ -22,12 +22,12 @@ namespace MhsLogoTests
 		[Test]
 		public void CanRecognizeTokens()
 		{
-			const string INPUT = "CLEAR MOVETO 200,50 REPEAT 4 [ FORWARD 100 LEFT 90 ]";
+			const string INPUT = "CLEAR TO Rectangle REPEAT 4 [ FORWARD 100 LEFT 90 ] END MOVETO 200,50";
 			var expectedTokens = new[]
 			                     	{
-			                     		Token.CLEAR, Token.MOVETO, Token.NUMBER, Token.COMMA, Token.NUMBER,
-			                     		Token.REPEAT, Token.NUMBER, Token.LBRACKET, Token.FORWARD, Token.NUMBER,
-			                     		Token.LEFT, Token.NUMBER, Token.RBRACKET, Token.EOF
+			                     		Token.CLEAR, Token.TO, Token.IDENTIFIER, Token.REPEAT, Token.NUMBER, Token.LBRACKET,
+			                     		Token.FORWARD, Token.NUMBER, Token.LEFT, Token.NUMBER, Token.RBRACKET, Token.END, 
+															Token.MOVETO, Token.NUMBER, Token.COMMA, Token.NUMBER, Token.EOF
 			                     	};
 			var scanner = new LogoScanner(INPUT);
 			foreach (Token expectedToken in expectedTokens)

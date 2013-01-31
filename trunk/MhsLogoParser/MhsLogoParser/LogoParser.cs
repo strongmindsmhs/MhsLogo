@@ -13,28 +13,36 @@ namespace MhsLogoParser
 			scanner = logoScanner;
 		}
 
-		// <logo-program>  ::= <logo-sentence> { <logo-sentence> } <EOF>
+		// <logo-program>  ::= TO <identifier> <logo-sentence> { <logo-sentence> } END <EOF>
+		//								   | <logo-sentence> { <logo-sentence> } <EOF>
 		public ICollection<ILogoCommand> ParseLogoProgram()
 		{
 			var result = new Collection<ILogoCommand>();
-			result.Add(ParseLogoSentence());
-			while (true)
+			Token nextToken = scanner.NextToken();
+			if (nextToken == Token.TO)
 			{
-				switch (scanner.NextToken())
+				Match(Token.TO);
+				Match(Token.IDENTIFIER);
+				var identifierRecord = new IdentifierRecord(scanner.ScanBuffer);
+				ILogoCommand logoSentence = ParseLogoSentence();
+				for (Token token = scanner.NextToken(); IsSentencePrefix(token); token = scanner.NextToken())
 				{
-					case Token.FORWARD:
-					case Token.BACK:
-					case Token.LEFT:
-					case Token.RIGHT:
-					case Token.REPEAT:
-						result.Add(ParseLogoSentence());
-						break;
-
-					default:
-						Match(Token.EOF);
-						return result;
+					ParseLogoSentence();
+				}
+				Match(Token.END);
+				var routineCommand = new LogoDefineRoutineCommand(identifierRecord);
+				result.Add(routineCommand);
+			}
+			else
+			{
+				result.Add(ParseLogoSentence());
+				for (Token token = scanner.NextToken(); IsSentencePrefix(token); token = scanner.NextToken())
+				{
+					result.Add(ParseLogoSentence());
 				}
 			}
+			Match(Token.EOF);
+			return result;
 		}
 
 		// <logo-sentence> ::= CLEAR
@@ -44,7 +52,6 @@ namespace MhsLogoParser
 		//                   | LEFT <integer>
 		//                   | RIGHT <integer>
 		//                   | REPEAT <integer> [ <logo-sentence> { <logo-sentence> } ]
-		//									 | CLEAR
 		private ILogoCommand ParseLogoSentence()
 		{
 			ILogoCommand result = null;
@@ -90,10 +97,7 @@ namespace MhsLogoParser
 					Match(Token.LBRACKET);
 					var logoCommands = new List<ILogoCommand>();
 					logoCommands.Add(ParseLogoSentence());
-					for (Token token = scanner.NextToken();
-					     token == Token.FORWARD || token == Token.BACK || token == Token.LEFT || token == Token.RIGHT ||
-					     token == Token.REPEAT;
-					     token = scanner.NextToken())
+					for (Token token = scanner.NextToken(); IsSentencePrefix(token); token = scanner.NextToken())
 					{
 						logoCommands.Add(ParseLogoSentence());
 					}
@@ -102,11 +106,19 @@ namespace MhsLogoParser
 					break;
 
 				default:
-					SyntaxError(String.Format("Expected one of: CLEAR, FORWARD, BACK, LEFT, RIGHT or REPEAT but found {0}",
+					SyntaxError(String.Format("Expected one of: CLEAR, MOVETO, FORWARD, BACK, LEFT, RIGHT or REPEAT but found {0}",
 					                          TokenHelper.TokenToText(nextToken)), LogoErrorCode.SentenceError);
 					break;
 			}
 			return result;
+		}
+
+		private static bool IsSentencePrefix(Token token)
+		{
+			return token == Token.CLEAR || token == Token.MOVETO ||
+			       token == Token.FORWARD || token == Token.BACK ||
+			       token == Token.LEFT || token == Token.RIGHT ||
+			       token == Token.REPEAT;
 		}
 
 		private void Match(Token token)

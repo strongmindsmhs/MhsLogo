@@ -8,7 +8,7 @@ namespace MhsLogoParser
 		private readonly Token[] reserved = new[]
 		                                    	{
 		                                    		Token.CLEAR, Token.MOVETO, Token.FORWARD, Token.BACK, Token.RIGHT, Token.LEFT,
-		                                    		Token.REPEAT
+		                                    		Token.REPEAT, Token.TO, Token.END
 		                                    	};
 
 		#region Privates
@@ -70,10 +70,6 @@ namespace MhsLogoParser
 							}
 							return Token.NUMBER;
 						}
-							//else if (char.IsWhiteSpace(ch))
-							//{
-							//  idx++;
-							//}
 						else if (char.IsLetter(ch))
 						{
 							ScanBuffer = ch.ToString();
@@ -81,7 +77,7 @@ namespace MhsLogoParser
 							while (idx < rawContents.Length)
 							{
 								ch = rawContents[idx];
-								if (char.IsLetter(ch))
+								if (char.IsLetterOrDigit(ch) || ch == '_')
 								{
 									ScanBuffer += ch;
 									idx++;
@@ -93,7 +89,7 @@ namespace MhsLogoParser
 							{
 								return lookup;
 							}
-							LexicalError(String.Format("Lexical error: Unrecognized keyword '{0}'", ScanBuffer));
+							return Token.IDENTIFIER;
 						}
 						else if (char.IsWhiteSpace(ch))
 						{
