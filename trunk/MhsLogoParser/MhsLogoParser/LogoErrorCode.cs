@@ -4,6 +4,7 @@
 	{
 		SentenceError,
 		MatchError,
-		NumberError
+		NumberError,
+		RoutineCallError
 	}
 }

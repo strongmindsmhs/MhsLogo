@@ -10,10 +10,7 @@ namespace MhsLogoParser
 
 		public ReadOnlyCollection<SymbolTableEntry> Entries
 		{
-			get
-			{
-				return new ReadOnlyCollection<SymbolTableEntry>(entries.Values.ToList());
-			}
+			get { return new ReadOnlyCollection<SymbolTableEntry>(entries.Values.ToList()); }
 		}
 
 		public int NumberOfEntries
@@ -45,7 +42,7 @@ namespace MhsLogoParser
 		public IEnumerable<string> LookupRoutines()
 		{
 			var result = new List<string>();
-			foreach (var entry in Entries)
+			foreach (SymbolTableEntry entry in Entries)
 			{
 				if (entry.Attributes.Any(attribute => attribute.Type == SymbolType.ROUTINE))
 				{

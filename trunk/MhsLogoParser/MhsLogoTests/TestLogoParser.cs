@@ -6,9 +6,21 @@ namespace MhsLogoTests
 	[TestFixture]
 	public class TestLogoParser
 	{
+		#region Setup/Teardown
+
+		[SetUp]
+		protected void SetUp()
+		{
+			symbolTable = new SymbolTable();
+		}
+
+		#endregion
+
+		private static SymbolTable symbolTable;
+
 		private static void TestParseProgram(string program)
 		{
-			var parser = new LogoParser(new LogoScanner(program), new SymbolTable());
+			var parser = new LogoParser(new LogoScanner(program), symbolTable);
 			parser.ParseLogoProgram();
 		}
 
@@ -23,6 +35,13 @@ namespace MhsLogoTests
 		public void CanParseRoutine()
 		{
 			TestParseProgram("TO RECTANGLE REPEAT 4 [ FORWARD 100 LEFT 90 ] END");
+		}
+
+		[Test]
+		public void CanParseRoutineUsage()
+		{
+			TestParseProgram("TO RECTANGLE REPEAT 4 [ FORWARD 100 LEFT 90 ] END");
+			TestParseProgram("RECTANGLE");
 		}
 
 		[Test]

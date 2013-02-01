@@ -11,9 +11,13 @@ namespace MhsLogoParser
 			this.routineNames = routineNames;
 		}
 
+		#region ILogoRoutineEvent Members
+
 		public IEnumerable<string> RoutineNames
 		{
 			get { return routineNames; }
 		}
+
+		#endregion
 	}
 }
