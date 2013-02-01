@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MhsLogoParser;
 
 namespace MhsLogoController
@@ -6,6 +7,8 @@ namespace MhsLogoController
 	public class LogoController
 	{
 		private static TurtleSituation currentSituation = TurtleSituation.DefaultSituation;
+
+		private static readonly SymbolTable symbolTable = new SymbolTable();
 
 		public static TurtleSituation CurrentSituation
 		{
@@ -15,8 +18,13 @@ namespace MhsLogoController
 
 		public static ICollection<BaseLogoCommand> CreateAndParse(string programText)
 		{
-			var parser = new LogoParser(new LogoScanner(programText));
+			var parser = new LogoParser(new LogoScanner(programText), symbolTable);
 			return parser.ParseLogoProgram();
+		}
+
+		public static SymbolTableEntry LookupRoutine(string name)
+		{
+			return symbolTable.Lookup(name);
 		}
 	}
 }
