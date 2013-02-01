@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="MhsLogoUI.View.RoutineView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ViewModel="clr-namespace:MhsLogoUI.ViewModel" xmlns:System="clr-namespace:System;assembly=mscorlib" mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" Background="White">
+	<UserControl.DataContext>
+		<ViewModel:RoutineViewModel />
+	</UserControl.DataContext>
+	<Grid Background="#FFBCC7D8">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="24" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<TextBlock Grid.Row="0" Background="#FF485C7F" Text="Project Explorer" Foreground="White" Height="23" VerticalAlignment="Top" Padding="3" />
+		<TabControl Grid.Row="1" Name="ExplorerTabControl" HorizontalAlignment="Stretch" Margin="0,3,3,3" VerticalAlignment="Stretch" Padding="2">
+			<TabItem Header="Routines" Name="RoutineTab">
+				<Grid>
+					<TreeView ItemsSource="{Binding Routines}" Name="RoutineTree" HorizontalAlignment="Stretch" Margin="3,3,3,3" VerticalAlignment="Stretch" BorderThickness="0">
+						<TreeView.ContextMenu>
+							<ContextMenu />
+						</TreeView.ContextMenu>
+						<TreeView.Resources>
+							<HierarchicalDataTemplate DataType="{x:Type System:String}">
+								<StackPanel Orientation="Horizontal">
+									<Image Source="LogoRoutine.png" Width="16" Height="16" SnapsToDevicePixels="True" />
+									<TextBlock Text="{Binding}" Margin="3,0,0,0" />
+								</StackPanel>
+							</HierarchicalDataTemplate>
+						</TreeView.Resources>
+					</TreeView>
+				</Grid>
+			</TabItem>
+		</TabControl>
+	</Grid>
+</UserControl>
