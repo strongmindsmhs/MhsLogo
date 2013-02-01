@@ -14,10 +14,12 @@ namespace MhsLogoTests
 		{
 			ICollection<BaseLogoCommand> programCommands =
 				LogoController.CreateAndParse("TO RECTANGLE REPEAT 4 [ FORWARD 100 LEFT 90 ] END");
-			var routine = programCommands.ElementAt(0) as LogoDefineRoutineCommand;
+			var routine = LogoController.LookupRoutine("RECTANGLE");
 			Assert.IsNotNull(routine);
 			Assert.AreEqual("RECTANGLE", routine.Name);
-			var firstCommand = routine.Commands[0] as LogoRepeatCommand;
+			var routineAttribute = routine.Attributes[0] as SymbolTableRoutineAttribute;
+			Assert.IsNotNull(routineAttribute);
+			var firstCommand = routineAttribute.Commands[0] as LogoRepeatCommand;
 			Assert.IsNotNull(firstCommand);
 			Assert.AreEqual(4, firstCommand.Repeat);
 			Assert.AreEqual(2, firstCommand.Commands.Count());

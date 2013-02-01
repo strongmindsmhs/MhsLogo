@@ -55,6 +55,7 @@
     <Compile Include="TestLogoProgram.cs" />
     <Compile Include="TestLogoScanner.cs" />
     <Compile Include="TestMainWindowViewModel.cs" />
+    <Compile Include="TestSymbolTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+
+namespace MhsLogoParser
+{
+	public class SymbolTable
+	{
+		private readonly Dictionary<string, SymbolTableEntry> entries = new Dictionary<string, SymbolTableEntry>();
+
+		public ReadOnlyCollection<SymbolTableEntry> Entries
+		{
+			get
+			{
+				return new ReadOnlyCollection<SymbolTableEntry>(entries.Values.ToList());
+			}
+		}
+
+		public int NumberOfEntries
+		{
+			get { return Entries.Count; }
+		}
+
+		public SymbolTableEntry Enter(string name)
+		{
+			SymbolTableEntry entry;
+			if (!(entries.TryGetValue(name, out entry)))
+			{
+				entry = new SymbolTableEntry(name);
+				entries.Add(name, entry);
+			}
+			return entry;
+		}
+
+		public SymbolTableEntry Lookup(string name)
+		{
+			SymbolTableEntry entry;
+			if (!entries.TryGetValue(name, out entry))
+			{
+				return SymbolTableEntry.None;
+			}
+			return entry;
+		}
+	}
+}

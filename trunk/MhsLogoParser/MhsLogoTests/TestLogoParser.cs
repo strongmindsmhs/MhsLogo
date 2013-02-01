@@ -8,7 +8,7 @@ namespace MhsLogoTests
 	{
 		private static void TestParseProgram(string program)
 		{
-			var parser = new LogoParser(new LogoScanner(program));
+			var parser = new LogoParser(new LogoScanner(program), new SymbolTable());
 			parser.ParseLogoProgram();
 		}
 

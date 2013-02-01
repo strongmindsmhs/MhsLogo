@@ -7,10 +7,12 @@ namespace MhsLogoParser
 	public class LogoParser
 	{
 		private readonly LogoScanner scanner;
+		private readonly SymbolTable symbolTable;
 
-		public LogoParser(LogoScanner logoScanner)
+		public LogoParser(LogoScanner scanner, SymbolTable symbolTable)
 		{
-			scanner = logoScanner;
+			this.scanner = scanner;
+			this.symbolTable = symbolTable;
 		}
 
 		// <logo-program>  ::= TO <identifier> <logo-sentence> { <logo-sentence> } END <EOF>
@@ -23,16 +25,15 @@ namespace MhsLogoParser
 			{
 				Match(Token.TO);
 				Match(Token.IDENTIFIER);
-				var identifierRecord = new IdentifierRecord(scanner.ScanBuffer);
+				var entry = symbolTable.Enter(scanner.ScanBuffer);
 				var routineCommands = new List<BaseLogoCommand>();
 				routineCommands.Add(ParseLogoSentence());
 				for (Token token = scanner.NextToken(); IsSentencePrefix(token); token = scanner.NextToken())
 				{
 					routineCommands.Add(ParseLogoSentence());
 				}
+				entry.AddAttribute(new SymbolTableRoutineAttribute(routineCommands));
 				Match(Token.END);
-				var routineCommand = new LogoDefineRoutineCommand(identifierRecord, routineCommands);
-				result.Add(routineCommand);
 			}
 			else
 			{
@@ -46,6 +47,7 @@ namespace MhsLogoParser
 			return result;
 		}
 
+		// <logo-sentence>
 		private BaseLogoCommand ParseLogoSentence()
 		{
 			BaseLogoCommand result = null;
