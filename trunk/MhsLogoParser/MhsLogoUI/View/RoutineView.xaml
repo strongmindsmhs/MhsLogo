@@ -12,11 +12,14 @@
 			<TabItem Header="Routines" Name="RoutineTab">
 				<Grid>
 					<TreeView ItemsSource="{Binding Routines}" Name="RoutineTree" HorizontalAlignment="Stretch" Margin="3,3,3,3" VerticalAlignment="Stretch" BorderThickness="0">
+						<TreeView.ContextMenu>
+							<ContextMenu />
+						</TreeView.ContextMenu>
 						<TreeView.Resources>
 							<HierarchicalDataTemplate DataType="{x:Type System:String}">
 								<StackPanel Orientation="Horizontal">
-									<Image Source="LogoRoutine.png" Width="16" Height="16" SnapsToDevicePixels="True"/>
-									<TextBlock Text="{Binding}" Margin="3,0,0,0"/>
+									<Image Source="LogoRoutine.png" Width="16" Height="16" SnapsToDevicePixels="True" />
+									<TextBlock Text="{Binding}" Margin="3,0,0,0" />
 								</StackPanel>
 							</HierarchicalDataTemplate>
 						</TreeView.Resources>

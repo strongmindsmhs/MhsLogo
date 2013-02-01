@@ -2,6 +2,7 @@
 using System.Linq;
 using MhsLogoController;
 using MhsLogoParser;
+using MhsLogoParser.LogoCommands;
 using NUnit.Framework;
 
 namespace MhsLogoTests
@@ -13,7 +14,7 @@ namespace MhsLogoTests
 		public void CanCreateLogoRoutine()
 		{
 			LogoController.CreateAndParse("TO RECTANGLE REPEAT 4 [ FORWARD 100 LEFT 90 ] END");
-			var routine = LogoController.LookupRoutine("RECTANGLE");
+			SymbolTableEntry routine = LogoController.LookupRoutine("RECTANGLE");
 			Assert.IsNotNull(routine);
 			Assert.AreEqual("RECTANGLE", routine.Name);
 			var routineAttribute = routine.Attributes[0] as SymbolTableRoutineAttribute;
@@ -63,6 +64,15 @@ namespace MhsLogoTests
 			var secondRepeat = firstRepeat.Commands.ElementAt(1) as LogoRepeatCommand;
 			Assert.IsNotNull(secondRepeat);
 			Assert.AreEqual(2, secondRepeat.Repeat);
+		}
+
+		[Test]
+		public void CanUseLogoRoutine()
+		{
+			ICollection<BaseLogoCommand> programCommands =
+				LogoController.CreateAndParse("TO RECTANGLE REPEAT 4 [ FORWARD 100 LEFT 90 ] END RECTANGLE");
+			var routineCallCommand = programCommands.ElementAt(0) as LogoRoutineCallCommand;
+			Assert.IsNotNull(routineCallCommand);
 		}
 	}
 }

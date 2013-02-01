@@ -16,6 +16,5 @@ namespace MhsLogoParser
 		{
 			get { return commands.AsReadOnly(); }
 		}
-
 	}
 }

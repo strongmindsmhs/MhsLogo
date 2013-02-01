@@ -3,7 +3,7 @@ using MhsUtility;
 
 namespace MhsLogoParser
 {
-	public interface ILogoRoutineEvent: IDomainEvent
+	public interface ILogoRoutineEvent : IDomainEvent
 	{
 		IEnumerable<string> RoutineNames { get; }
 	}

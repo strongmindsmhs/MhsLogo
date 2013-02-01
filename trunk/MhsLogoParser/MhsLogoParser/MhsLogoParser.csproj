@@ -50,6 +50,7 @@
     <Compile Include="DomainEvents\ILogoRoutineEvent.cs" />
     <Compile Include="DomainEvents\LogoCommandEvent.cs" />
     <Compile Include="DomainEvents\LogoRoutineEvent.cs" />
+    <Compile Include="LogoCommands\LogoRoutineCallCommand.cs" />
     <Compile Include="Records\IdentifierRecord.cs" />
     <Compile Include="LogoCommands\BaseLogoCommand.cs" />
     <Compile Include="LogoCommands\LogoClearCommand.cs" />

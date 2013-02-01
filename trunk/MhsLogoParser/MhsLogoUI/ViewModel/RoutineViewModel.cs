@@ -4,7 +4,7 @@ using MhsUtility;
 
 namespace MhsLogoUI.ViewModel
 {
-	public class RoutineViewModel: BaseViewModel, IDomainEventHandler<ILogoRoutineEvent>
+	public class RoutineViewModel : BaseViewModel, IDomainEventHandler<ILogoRoutineEvent>
 	{
 		private readonly ObservableCollection<string> routines = new ObservableCollection<string>();
 
@@ -18,13 +18,17 @@ namespace MhsLogoUI.ViewModel
 			get { return routines; }
 		}
 
+		#region IDomainEventHandler<ILogoRoutineEvent> Members
+
 		public void Handle(ILogoRoutineEvent args)
 		{
 			routines.Clear();
-			foreach (var name in args.RoutineNames)
+			foreach (string name in args.RoutineNames)
 			{
 				routines.Add(name);
 			}
 		}
+
+		#endregion
 	}
 }
