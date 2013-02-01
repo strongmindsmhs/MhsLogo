@@ -4,7 +4,6 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using MhsLogoController;
 using MhsLogoParser;
-using MhsLogoParser.LogoCommands;
 using MhsLogoUI.Commands;
 using MhsUtility;
 

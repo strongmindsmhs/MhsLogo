@@ -1,4 +1,4 @@
-﻿namespace MhsLogoParser.LogoCommands
+﻿namespace MhsLogoParser
 {
 	public class LogoCommandEvent : ILogoCommandEvent
 	{

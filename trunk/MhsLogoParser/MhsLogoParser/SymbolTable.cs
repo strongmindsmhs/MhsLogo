@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -41,6 +40,19 @@ namespace MhsLogoParser
 				return SymbolTableEntry.None;
 			}
 			return entry;
+		}
+
+		public IEnumerable<string> LookupRoutines()
+		{
+			var result = new List<string>();
+			foreach (var entry in Entries)
+			{
+				if (entry.Attributes.Any(attribute => attribute.Type == SymbolType.ROUTINE))
+				{
+					result.Add(entry.Name);
+				}
+			}
+			return result;
 		}
 	}
 }
