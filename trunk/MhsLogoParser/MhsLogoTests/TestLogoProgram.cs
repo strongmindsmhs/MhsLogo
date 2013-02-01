@@ -12,8 +12,7 @@ namespace MhsLogoTests
 		[Test]
 		public void CanCreateLogoRoutine()
 		{
-			ICollection<BaseLogoCommand> programCommands =
-				LogoController.CreateAndParse("TO RECTANGLE REPEAT 4 [ FORWARD 100 LEFT 90 ] END");
+			LogoController.CreateAndParse("TO RECTANGLE REPEAT 4 [ FORWARD 100 LEFT 90 ] END");
 			var routine = LogoController.LookupRoutine("RECTANGLE");
 			Assert.IsNotNull(routine);
 			Assert.AreEqual("RECTANGLE", routine.Name);
