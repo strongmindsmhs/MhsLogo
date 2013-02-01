@@ -46,8 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LogoCommands\ILogoCommandEvent.cs" />
-    <Compile Include="LogoCommands\LogoCommandEvent.cs" />
+    <Compile Include="DomainEvents\ILogoCommandEvent.cs" />
+    <Compile Include="DomainEvents\ILogoRoutineEvent.cs" />
+    <Compile Include="DomainEvents\LogoCommandEvent.cs" />
+    <Compile Include="DomainEvents\LogoRoutineEvent.cs" />
     <Compile Include="Records\IdentifierRecord.cs" />
     <Compile Include="LogoCommands\BaseLogoCommand.cs" />
     <Compile Include="LogoCommands\LogoClearCommand.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="SymbolTable.cs" />
     <Compile Include="SymbolTableAttribute.cs" />
     <Compile Include="SymbolTableEntry.cs" />
+    <Compile Include="SymbolType.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="TokenHelper.cs" />
     <Compile Include="TurtleSituation.cs" />

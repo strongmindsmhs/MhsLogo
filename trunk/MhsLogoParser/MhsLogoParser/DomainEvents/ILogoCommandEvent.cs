@@ -1,6 +1,6 @@
 ﻿using MhsUtility;
 
-namespace MhsLogoParser.LogoCommands
+namespace MhsLogoParser
 {
 	public interface ILogoCommandEvent : IDomainEvent
 	{

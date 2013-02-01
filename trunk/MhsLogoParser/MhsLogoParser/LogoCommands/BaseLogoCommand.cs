@@ -1,5 +1,4 @@
-﻿using MhsLogoParser.LogoCommands;
-using MhsUtility;
+﻿using MhsUtility;
 
 namespace MhsLogoParser
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using MhsUtility;
 
 namespace MhsLogoParser
 {
@@ -32,8 +33,10 @@ namespace MhsLogoParser
 				{
 					routineCommands.Add(ParseLogoSentence());
 				}
-				entry.AddAttribute(new SymbolTableRoutineAttribute(routineCommands));
+				var routineAttribute = new SymbolTableRoutineAttribute(routineCommands);
+				entry.AddAttribute(routineAttribute);
 				Match(Token.END);
+				DomainEvents.Raise(new LogoRoutineEvent(symbolTable.LookupRoutines()));
 			}
 			else
 			{
