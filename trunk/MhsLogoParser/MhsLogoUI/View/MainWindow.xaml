@@ -22,7 +22,16 @@
 					</Canvas>
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
-			<ItemsControl.Items></ItemsControl.Items>
+			<ItemsControl.Triggers>
+				<EventTrigger RoutedEvent="Binding.TargetUpdated">
+					<BeginStoryboard>
+						<Storyboard >
+							<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="X1" From="{Binding X1}" To="{Binding X2}" Duration="0:0:3" />
+							<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="Y1" From="{Binding Y1}" To="{Binding Y2}" Duration="0:0:3" />
+						</Storyboard>
+					</BeginStoryboard>					
+				</EventTrigger>
+			</ItemsControl.Triggers>
 		</ItemsControl>
 		<MhsLogoUI:ConsoleView Grid.Row="1" Grid.Column="0" MinWidth="500" />
 		<StatusBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="500" HorizontalAlignment="Stretch">
