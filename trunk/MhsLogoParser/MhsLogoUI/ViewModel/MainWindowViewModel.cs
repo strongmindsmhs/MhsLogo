@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using MhsLogoController;
 using MhsLogoParser;
@@ -22,7 +24,7 @@ namespace MhsLogoUI.ViewModel
 			DomainEvents.Register<ILogoCommandEvent>(Handle);
 			turtleShape = new Polygon();
 			turtleShape.ToTurtle(LogoController.CurrentSituation);
-			DrawingInstructions.Add(turtleShape);
+			drawingInstructions.Add(turtleShape);
 		}
 
 		public MainWindowViewModel() :
@@ -61,19 +63,21 @@ namespace MhsLogoUI.ViewModel
 			{
 				case TurtleSituationChange.Moved:
 					var brush = new SolidColorBrush(Colors.Black);
-					DrawingInstructions.Add(new Line
-					                        	{
-					                        		X1 = currentSituation.Position.X,
-					                        		Y1 = currentSituation.Position.Y,
-					                        		X2 = newSituation.Position.X,
-					                        		Y2 = newSituation.Position.Y,
-					                        		Stroke = brush,
-					                        		StrokeThickness = 3
-					                        	});
+					var line = new Line
+					           	{
+					           		X1 = currentSituation.Position.X,
+					           		Y1 = currentSituation.Position.Y,
+					           		X2 = newSituation.Position.X,
+					           		Y2 = newSituation.Position.Y,
+												Name = "CurrentLine",
+					           		Stroke = brush,
+					           		StrokeThickness = 2
+					           	};
+					drawingInstructions.Add(line);
 					break;
 
 				case TurtleSituationChange.Cleared:
-					DrawingInstructions.Clear();
+					drawingInstructions.Clear();
 					break;
 
 				case TurtleSituationChange.Positioned:
