@@ -61,6 +61,7 @@
     <Compile Include="Commands\ParseErrorEventArgs.cs" />
     <Compile Include="Commands\ParseProgramCommand.cs" />
     <Compile Include="ViewModel\ConsoleViewModel.cs" />
+    <Compile Include="ViewModel\DrawingInstruction.cs" />
     <Compile Include="ViewModel\RoutineViewModel.cs" />
     <Compile Include="View\ConsoleView.xaml.cs">
       <DependentUpon>ConsoleView.xaml</DependentUpon>

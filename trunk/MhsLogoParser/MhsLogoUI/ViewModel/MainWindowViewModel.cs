@@ -13,18 +13,20 @@ namespace MhsLogoUI.ViewModel
 {
 	public class MainWindowViewModel : BaseViewModel, IDomainEventHandler<ILogoCommandEvent>
 	{
-		private readonly Polygon turtleShape;
-		private ObservableCollection<Shape> drawingInstructions = new ObservableCollection<Shape>();
+		private const int TURTLE_SPEED_IN_MS = 200;
+		//private readonly Polygon turtleShape;
+		private ObservableCollection<DrawingInstruction> drawingInstructions = new ObservableCollection<DrawingInstruction>();
 
 		private string parseError;
+		private TimeSpan currentTime;
 
 		public MainWindowViewModel(ParseProgramCommand parseProgramCommand)
 		{
 			parseProgramCommand.ParseResult += OnParseProgramCommandResult;
 			DomainEvents.Register<ILogoCommandEvent>(Handle);
-			turtleShape = new Polygon();
-			turtleShape.ToTurtle(LogoController.CurrentSituation);
-			drawingInstructions.Add(turtleShape);
+			//turtleShape = new Polygon();
+			//turtleShape.ToTurtle(LogoController.CurrentSituation);
+			//drawingInstructions.Add(turtleShape);
 		}
 
 		public MainWindowViewModel() :
@@ -42,7 +44,7 @@ namespace MhsLogoUI.ViewModel
 			}
 		}
 
-		public ObservableCollection<Shape> DrawingInstructions
+		public ObservableCollection<DrawingInstruction> DrawingInstructions
 		{
 			get { return drawingInstructions; }
 			set
@@ -62,22 +64,21 @@ namespace MhsLogoUI.ViewModel
 			switch (newSituation.Change)
 			{
 				case TurtleSituationChange.Moved:
-					var brush = new SolidColorBrush(Colors.Black);
-					var line = new Line
+					var line = new DrawingInstruction
 					           	{
 					           		X1 = currentSituation.Position.X,
 					           		Y1 = currentSituation.Position.Y,
 					           		X2 = newSituation.Position.X,
 					           		Y2 = newSituation.Position.Y,
-												Name = "CurrentLine",
-					           		Stroke = brush,
-					           		StrokeThickness = 2
+												TimeOffset = currentTime
 					           	};
 					drawingInstructions.Add(line);
+					currentTime = currentTime.Add(TimeSpan.FromMilliseconds(TURTLE_SPEED_IN_MS));
 					break;
 
 				case TurtleSituationChange.Cleared:
 					drawingInstructions.Clear();
+					newSituation = TurtleSituation.DefaultSituation;
 					break;
 
 				case TurtleSituationChange.Positioned:
@@ -108,10 +109,10 @@ namespace MhsLogoUI.ViewModel
 			                      		CenterX = newSituation.Position.X,
 			                      		CenterY = newSituation.Position.Y
 			                      	};
-			turtleShape.ToTurtle(newSituation);
-			turtleShape.RenderTransform = rotateTransform;
-			drawingInstructions.Remove(turtleShape);
-			drawingInstructions.Add(turtleShape);
+			//turtleShape.ToTurtle(newSituation);
+			//turtleShape.RenderTransform = rotateTransform;
+			//drawingInstructions.Remove(turtleShape);
+			//drawingInstructions.Add(turtleShape);
 		}
 	}
 }
