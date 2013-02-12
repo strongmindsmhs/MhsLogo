@@ -22,18 +22,24 @@
 					</Canvas>
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
-			<ItemsControl.Triggers>
-				<EventTrigger RoutedEvent="Binding.TargetUpdated">
-					<BeginStoryboard>
-						<Storyboard >
-							<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="X1" From="{Binding X1}" To="{Binding X2}" Duration="0:0:3" />
-							<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="Y1" From="{Binding Y1}" To="{Binding Y2}" Duration="0:0:3" />
-						</Storyboard>
-					</BeginStoryboard>					
-				</EventTrigger>
-			</ItemsControl.Triggers>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate DataType="{x:Type ViewModel:DrawingInstruction}">
+					<Line Name="CurrentLine" X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X1}" Y2="{Binding Y1}" Stroke="Black" StrokeThickness="2">
+						<Line.Triggers>
+							<EventTrigger RoutedEvent="Loaded">
+								<BeginStoryboard>
+									<Storyboard >
+										<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="X2" Duration="0:0:0.2" BeginTime="{Binding Path=TimeOffset}" From="{Binding Path=X1}" To="{Binding Path=X2}"/>
+										<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="Y2" Duration="0:0:0.2" BeginTime="{Binding Path=TimeOffset}" From="{Binding Path=Y1}" To="{Binding Path=Y2}"/>
+									</Storyboard>
+								</BeginStoryboard>
+							</EventTrigger>
+						</Line.Triggers>
+					</Line>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
 		</ItemsControl>
-		<MhsLogoUI:ConsoleView Grid.Row="1" Grid.Column="0" MinWidth="500" />
+		<MhsLogoUI:ConsoleView x:Name="LogoConsole" Grid.Row="1" Grid.Column="0" MinWidth="500" />
 		<StatusBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="500" HorizontalAlignment="Stretch">
 			<TextBlock Text="{Binding Path=ParseError}" />
 		</StatusBar>
