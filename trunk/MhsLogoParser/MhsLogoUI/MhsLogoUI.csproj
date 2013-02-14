@@ -60,9 +60,11 @@
     </ApplicationDefinition>
     <Compile Include="Commands\ParseErrorEventArgs.cs" />
     <Compile Include="Commands\ParseProgramCommand.cs" />
+    <Compile Include="ViewModel\Instructions\BaseInstruction.cs" />
     <Compile Include="ViewModel\ConsoleViewModel.cs" />
-    <Compile Include="ViewModel\DrawingInstruction.cs" />
+    <Compile Include="ViewModel\Instructions\DrawingInstruction.cs" />
     <Compile Include="ViewModel\RoutineViewModel.cs" />
+    <Compile Include="ViewModel\Instructions\TurtleInstruction.cs" />
     <Compile Include="View\ConsoleView.xaml.cs">
       <DependentUpon>ConsoleView.xaml</DependentUpon>
     </Compile>
@@ -79,7 +81,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="ViewModel\PolygonExtensions.cs" />
     <Compile Include="View\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -1,23 +1,17 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace MhsLogoUI.ViewModel
 {
-	public class DrawingInstruction: INotifyPropertyChanged
+	public class DrawingInstruction : BaseInstruction
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		private void OnPropertyChanged(string propertyName)
-		{
-			PropertyChangedEventHandler handler = PropertyChanged;
-			if (handler != null)
-			{
-				var e = new PropertyChangedEventArgs(propertyName);
-				handler(this, e);
-			}
-		}
-
 		private TimeSpan timeOffset;
+
+		private int x1;
+		private int x2;
+
+		private int y1;
+		private int y2;
+
 		public TimeSpan TimeOffset
 		{
 			get { return timeOffset; }
@@ -28,17 +22,16 @@ namespace MhsLogoUI.ViewModel
 			}
 		}
 
-		private int x1;
 		public int X1
 		{
 			get { return x1; }
-			set { 
+			set
+			{
 				x1 = value;
 				OnPropertyChanged("X1");
 			}
 		}
 
-		private int y1;
 		public int Y1
 		{
 			get { return y1; }
@@ -49,7 +42,6 @@ namespace MhsLogoUI.ViewModel
 			}
 		}
 
-		private int x2;
 		public int X2
 		{
 			get { return x2; }
@@ -60,7 +52,6 @@ namespace MhsLogoUI.ViewModel
 			}
 		}
 
-		private int y2;
 		public int Y2
 		{
 			get { return y2; }
