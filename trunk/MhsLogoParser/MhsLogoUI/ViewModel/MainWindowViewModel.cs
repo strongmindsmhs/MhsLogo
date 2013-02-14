@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using MhsLogoController;
 using MhsLogoParser;
 using MhsLogoUI.Commands;
@@ -14,19 +16,18 @@ namespace MhsLogoUI.ViewModel
 	public class MainWindowViewModel : BaseViewModel, IDomainEventHandler<ILogoCommandEvent>
 	{
 		private const int TURTLE_SPEED_IN_MS = 200;
-		//private readonly Polygon turtleShape;
-		private ObservableCollection<DrawingInstruction> drawingInstructions = new ObservableCollection<DrawingInstruction>();
 
-		private string parseError;
+		private readonly TurtleInstruction turtleInstruction;
 		private TimeSpan currentTime;
+		private BindingList<BaseInstruction> drawingInstructions = new BindingList<BaseInstruction>();
+		private string parseError;
 
 		public MainWindowViewModel(ParseProgramCommand parseProgramCommand)
 		{
 			parseProgramCommand.ParseResult += OnParseProgramCommandResult;
 			DomainEvents.Register<ILogoCommandEvent>(Handle);
-			//turtleShape = new Polygon();
-			//turtleShape.ToTurtle(LogoController.CurrentSituation);
-			//drawingInstructions.Add(turtleShape);
+			turtleInstruction = new TurtleInstruction(LogoController.CurrentSituation);
+			drawingInstructions.Add(turtleInstruction);
 		}
 
 		public MainWindowViewModel() :
@@ -44,7 +45,7 @@ namespace MhsLogoUI.ViewModel
 			}
 		}
 
-		public ObservableCollection<DrawingInstruction> DrawingInstructions
+		public BindingList<BaseInstruction> DrawingInstructions
 		{
 			get { return drawingInstructions; }
 			set
@@ -70,20 +71,23 @@ namespace MhsLogoUI.ViewModel
 					           		Y1 = currentSituation.Position.Y,
 					           		X2 = newSituation.Position.X,
 					           		Y2 = newSituation.Position.Y,
-												TimeOffset = currentTime
+					           		TimeOffset = currentTime
 					           	};
-					drawingInstructions.Add(line);
-					currentTime = currentTime.Add(TimeSpan.FromMilliseconds(TURTLE_SPEED_IN_MS));
+					DrawingInstructions.Add(line);
 					break;
 
 				case TurtleSituationChange.Cleared:
-					drawingInstructions.Clear();
 					newSituation = TurtleSituation.DefaultSituation;
+					List<BaseInstruction> itemsToRemove = DrawingInstructions.Where(i => i is DrawingInstruction).ToList();
+					foreach (BaseInstruction itemToRemove in itemsToRemove)
+					{
+						DrawingInstructions.Remove(itemToRemove);
+					}
 					break;
 
 				case TurtleSituationChange.Positioned:
-				case TurtleSituationChange.None:
 				case TurtleSituationChange.Turned:
+				case TurtleSituationChange.None:
 					// Do nothing
 					break;
 
@@ -91,7 +95,10 @@ namespace MhsLogoUI.ViewModel
 					throw new ArgumentOutOfRangeException();
 			}
 
-			DoTurtle(newSituation);
+			DoTurtle(currentSituation, newSituation);
+
+			currentTime = currentTime.Add(TimeSpan.FromMilliseconds(TURTLE_SPEED_IN_MS));
+
 			LogoController.CurrentSituation = newSituation;
 		}
 
@@ -100,19 +107,30 @@ namespace MhsLogoUI.ViewModel
 		private void OnParseProgramCommandResult(object sender, ParseErrorEventArgs e)
 		{
 			ParseError = e.ErrorMessage;
+			if (!e.Error)
+			{
+				currentTime = TimeSpan.FromMilliseconds(0);
+			}
 		}
 
-		private void DoTurtle(TurtleSituation newSituation)
+		private void DoTurtle(TurtleSituation currentSituation, TurtleSituation newSituation)
 		{
-			var rotateTransform = new RotateTransform(newSituation.TurnAngle)
-			                      	{
-			                      		CenterX = newSituation.Position.X,
-			                      		CenterY = newSituation.Position.Y
-			                      	};
-			//turtleShape.ToTurtle(newSituation);
-			//turtleShape.RenderTransform = rotateTransform;
-			//drawingInstructions.Remove(turtleShape);
-			//drawingInstructions.Add(turtleShape);
+			turtleInstruction.CenterX = newSituation.Position.X;
+			turtleInstruction.CenterY = newSituation.Position.Y;
+			turtleInstruction.TurnAngle = newSituation.TurnAngle;
+			turtleInstruction.TimeOffset = currentTime;
+			turtleInstruction.ToPoints(newSituation);
+			turtleInstruction.Movement =
+				new PathGeometry(
+					new PathFigureCollection
+						{
+							new PathFigure(new Point(currentSituation.Position.X, currentSituation.Position.Y),
+							               new List<PathSegment>
+							               	{
+							               		new LineSegment(
+							               			new Point(newSituation.Position.X, newSituation.Position.Y), false)
+							               	}, false)
+						});
 		}
 	}
 }

@@ -22,22 +22,42 @@
 					</Canvas>
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
+			<ItemsControl.Resources>
 				<DataTemplate DataType="{x:Type ViewModel:DrawingInstruction}">
 					<Line Name="CurrentLine" X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X1}" Y2="{Binding Y1}" Stroke="Black" StrokeThickness="2">
 						<Line.Triggers>
 							<EventTrigger RoutedEvent="Loaded">
 								<BeginStoryboard>
-									<Storyboard >
-										<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="X2" Duration="0:0:0.2" BeginTime="{Binding Path=TimeOffset}" From="{Binding Path=X1}" To="{Binding Path=X2}"/>
-										<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="Y2" Duration="0:0:0.2" BeginTime="{Binding Path=TimeOffset}" From="{Binding Path=Y1}" To="{Binding Path=Y2}"/>
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="X2" Duration="0:0:0.2" BeginTime="{Binding Path=TimeOffset}" From="{Binding Path=X1}" To="{Binding Path=X2}" />
+										<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="Y2" Duration="0:0:0.2" BeginTime="{Binding Path=TimeOffset}" From="{Binding Path=Y1}" To="{Binding Path=Y2}" />
 									</Storyboard>
 								</BeginStoryboard>
 							</EventTrigger>
 						</Line.Triggers>
 					</Line>
 				</DataTemplate>
-			</ItemsControl.ItemTemplate>
+				<DataTemplate DataType="{x:Type ViewModel:TurtleInstruction}">
+					<Polygon Name="Turtle" Points="{Binding Path=Points, NotifyOnTargetUpdated=True}" Stroke="Blue" StrokeThickness="3">
+						<Polygon.RenderTransform>
+							<TransformGroup>
+								<RotateTransform x:Name="TurtleRotate" Angle="{Binding Path=TurnAngle}" CenterX="{Binding Path=CenterX}" CenterY="{Binding Path=CenterY}" />
+								<TranslateTransform x:Name="TurtleTransform" />
+							</TransformGroup>
+						</Polygon.RenderTransform>
+						<Polygon.Triggers>
+							<EventTrigger RoutedEvent="Loaded">
+								<BeginStoryboard>
+									<Storyboard>
+										<DoubleAnimationUsingPath Storyboard.TargetName="TurtleTransform" Storyboard.TargetProperty="X" Source="X" Duration="0:0:0.2" BeginTime="{Binding Path=TimeOffset}" PathGeometry="{Binding Path=Movement}" />
+										<DoubleAnimationUsingPath Storyboard.TargetName="TurtleTransform" Storyboard.TargetProperty="Y" Source="Y" Duration="0:0:0.2" BeginTime="{Binding Path=TimeOffset}" PathGeometry="{Binding Path=Movement}" />
+									</Storyboard>
+								</BeginStoryboard>
+							</EventTrigger>
+						</Polygon.Triggers>
+					</Polygon>
+				</DataTemplate>
+			</ItemsControl.Resources>
 		</ItemsControl>
 		<MhsLogoUI:ConsoleView x:Name="LogoConsole" Grid.Row="1" Grid.Column="0" MinWidth="500" />
 		<StatusBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="500" HorizontalAlignment="Stretch">
