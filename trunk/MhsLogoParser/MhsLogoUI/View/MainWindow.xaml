@@ -29,8 +29,8 @@
 							<EventTrigger RoutedEvent="Loaded">
 								<BeginStoryboard>
 									<Storyboard>
-										<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="X2" Duration="0:0:0.2" BeginTime="{Binding Path=TimeOffset}" From="{Binding Path=X1}" To="{Binding Path=X2}" />
-										<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="Y2" Duration="0:0:0.2" BeginTime="{Binding Path=TimeOffset}" From="{Binding Path=Y1}" To="{Binding Path=Y2}" />
+										<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="X2" Duration="0:0:0.01" BeginTime="{Binding Path=TimeOffset}" From="{Binding Path=X1}" To="{Binding Path=X2}" />
+										<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="Y2" Duration="0:0:0.01" BeginTime="{Binding Path=TimeOffset}" From="{Binding Path=Y1}" To="{Binding Path=Y2}" />
 									</Storyboard>
 								</BeginStoryboard>
 							</EventTrigger>
@@ -38,23 +38,13 @@
 					</Line>
 				</DataTemplate>
 				<DataTemplate DataType="{x:Type ViewModel:TurtleInstruction}">
-					<Polygon Name="Turtle" Points="{Binding Path=Points, NotifyOnTargetUpdated=True}" Stroke="Blue" StrokeThickness="3">
+					<Polygon Name="Turtle" Points="{Binding Path=Points, NotifyOnTargetUpdated=True}" Stroke="Blue" StrokeThickness="3" Canvas.ZIndex="100">
 						<Polygon.RenderTransform>
 							<TransformGroup>
 								<RotateTransform x:Name="TurtleRotate" Angle="{Binding Path=TurnAngle}" CenterX="{Binding Path=CenterX}" CenterY="{Binding Path=CenterY}" />
 								<TranslateTransform x:Name="TurtleTransform" />
 							</TransformGroup>
 						</Polygon.RenderTransform>
-						<Polygon.Triggers>
-							<EventTrigger RoutedEvent="Loaded">
-								<BeginStoryboard>
-									<Storyboard>
-										<DoubleAnimationUsingPath Storyboard.TargetName="TurtleTransform" Storyboard.TargetProperty="X" Source="X" Duration="0:0:0.2" BeginTime="{Binding Path=TimeOffset}" PathGeometry="{Binding Path=Movement}" />
-										<DoubleAnimationUsingPath Storyboard.TargetName="TurtleTransform" Storyboard.TargetProperty="Y" Source="Y" Duration="0:0:0.2" BeginTime="{Binding Path=TimeOffset}" PathGeometry="{Binding Path=Movement}" />
-									</Storyboard>
-								</BeginStoryboard>
-							</EventTrigger>
-						</Polygon.Triggers>
 					</Polygon>
 				</DataTemplate>
 			</ItemsControl.Resources>
