@@ -15,7 +15,7 @@ namespace MhsLogoUI.ViewModel
 {
 	public class MainWindowViewModel : BaseViewModel, IDomainEventHandler<ILogoCommandEvent>
 	{
-		private const int TURTLE_SPEED_IN_MS = 200;
+		private const int TURTLE_SPEED_IN_MS = 20;
 
 		private readonly TurtleInstruction turtleInstruction;
 		private TimeSpan currentTime;
