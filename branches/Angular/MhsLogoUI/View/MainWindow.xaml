@@ -1,0 +1,58 @@
+﻿<Window x:Class="MhsLogoUI.View.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:MhsLogoUI="clr-namespace:MhsLogoUI" xmlns:ViewModel="clr-namespace:MhsLogoUI.ViewModel" xmlns:View="clr-namespace:MhsLogoUI.View" Title="MhsLogo" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+	<Window.DataContext>
+		<ViewModel:MainWindowViewModel />
+	</Window.DataContext>
+	<Grid FocusManager.FocusedElement="{Binding ElementName=LogoConsole}">
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition Height="25" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+		<ItemsControl Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Path=DrawingInstructions}" Background="#FFBCC7D8">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas Name="LogoCanvas" Margin="5,5,5,0" MinWidth="500" Height="400" HorizontalAlignment="Stretch" Background="AntiqueWhite" IsItemsHost="True">
+						<Canvas.RenderTransform>
+							<ScaleTransform CenterY="200" ScaleY="-1" />
+						</Canvas.RenderTransform>
+					</Canvas>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.Resources>
+				<DataTemplate DataType="{x:Type ViewModel:DrawingInstruction}">
+					<Line Name="CurrentLine" X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X1}" Y2="{Binding Y1}" Stroke="Black" StrokeThickness="2">
+						<Line.Triggers>
+							<EventTrigger RoutedEvent="Loaded">
+								<BeginStoryboard>
+									<Storyboard>
+										<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="X2" Duration="0:0:0.01" BeginTime="{Binding Path=TimeOffset}" From="{Binding Path=X1}" To="{Binding Path=X2}" />
+										<DoubleAnimation Storyboard.TargetName="CurrentLine" Storyboard.TargetProperty="Y2" Duration="0:0:0.01" BeginTime="{Binding Path=TimeOffset}" From="{Binding Path=Y1}" To="{Binding Path=Y2}" />
+									</Storyboard>
+								</BeginStoryboard>
+							</EventTrigger>
+						</Line.Triggers>
+					</Line>
+				</DataTemplate>
+				<DataTemplate DataType="{x:Type ViewModel:TurtleInstruction}">
+					<Polygon Name="Turtle" Points="{Binding Path=Points, NotifyOnTargetUpdated=True}" Stroke="Blue" StrokeThickness="3" Canvas.ZIndex="100">
+						<Polygon.RenderTransform>
+							<TransformGroup>
+								<RotateTransform x:Name="TurtleRotate" Angle="{Binding Path=TurnAngle}" CenterX="{Binding Path=CenterX}" CenterY="{Binding Path=CenterY}" />
+								<TranslateTransform x:Name="TurtleTransform" />
+							</TransformGroup>
+						</Polygon.RenderTransform>
+					</Polygon>
+				</DataTemplate>
+			</ItemsControl.Resources>
+		</ItemsControl>
+		<MhsLogoUI:ConsoleView x:Name="LogoConsole" Grid.Row="1" Grid.Column="0" MinWidth="500" />
+		<StatusBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" MinWidth="500" HorizontalAlignment="Stretch">
+			<TextBlock Text="{Binding Path=ParseError}" />
+		</StatusBar>
+		<View:RoutineView Grid.Column="1" Grid.RowSpan="2" MinWidth="200" />
+	</Grid>
+</Window>
