@@ -10,6 +10,6 @@ Part 1: [Scanner](http://blog.strongminds.dk/post/2012/11/30/Writing-a-small-par
 
 Part 2: [Parser](http://blog.strongminds.dk/post/2012/12/07/Writing-(Part-2-Parser))
 
-Part 3: [Semantics and UI](http://blog.strongminds.dk/post/2013/01/19/Writing-a-small-parser-interpreter-(Part-3-Semantic-processing-and-simple-WPF-MVVM-UI))
+Part 3: [Semantics and UI](http://blog.strongminds.dk/post/2013/01/20/Writing-a-small-parser-interpreter-(Part-3-Semantic-processing-and-simple-WPF-MVVM-UI))
 
 **Project open to participation - please chip in!**
