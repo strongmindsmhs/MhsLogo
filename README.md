@@ -4,6 +4,8 @@
 
 This C# project is an example on using LL(1) parsing techniques to create a small [LOGO](http://en.wikipedia.org/wiki/Logo_(programming_language)) parser, which translates simple LOGO programming constructs to executable drawing instructions for interpretation in a MVVM WPF UI.
 
+https://github.com/strongmindsmhs/MhsLogo/blob/master/Demo.png
+
 The project is the output of a small mini blog series:
 
 Part 1: [Scanner](http://blog.strongminds.dk/post/2012/11/30/Writing-a-small-parser-interpreter-(Part-1))
